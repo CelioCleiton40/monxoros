@@ -46,7 +46,7 @@ export default function ManifestoSection() {
       <div className="absolute inset-0 z-0 bg-top">
         <img
           src={ourphilosophy}
-          alt="Photographer capturing the Sertão landscape"
+          alt="Professional photographer capturing authentic moments in the Brazilian Sertão during golden hour expedition"
           className="w-full h-full object-cover object-bottom-right"
           loading="lazy"
         />

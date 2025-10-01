@@ -50,7 +50,7 @@ export default function HeroSection() {
             {/* Fallback image for unsupported browsers */}
             <img
               src={hero}
-              alt="Sertão landscape"
+              alt="Dramatic Sertão landscape at golden hour - Photography expedition through Northeast Brazil's Caatinga biome"
               loading="eager"
               className="w-full h-full object-cover"
             />
@@ -58,7 +58,7 @@ export default function HeroSection() {
         ) : (
           <img
             src={hero}
-            alt="Sertão landscape"
+            alt="Dramatic Sertão landscape at golden hour - Photography expedition through Northeast Brazil's Caatinga biome"
             loading="eager"
             className="w-full h-full object-cover"
           />
