@@ -5,6 +5,7 @@ import ItineraryTimeline from "@/components/ItineraryTimeline";
 import InvitationSection from "@/components/InvitationSection";
 import AboutPhotographer from "@/components/AboutPhotographer";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 import FloatingWidget from "@/components/FloatingWidget";
 
@@ -25,6 +26,9 @@ export default function Home() {
 
       {/* Testimonials Section */}
       <TestimonialsSection />
+
+      {/* Newsletter Section */}
+      <Newsletter />
 
       {/* Invitation Section */}
       <InvitationSection />

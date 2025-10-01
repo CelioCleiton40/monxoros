@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import { Star, Quote, Play } from 'lucide-react';
 import { useState } from 'react';
 
+// Import dos assets locais
+import testimonialsVideo from "../assets/TestimonialsSection/video/testimonials-01.webm";
+import testimonialsPoster from "../assets/TestimonialsSection/img/testimonials-img-01.png";
+
 interface Testimonial {
   id: number;
   name: string;
@@ -20,8 +24,8 @@ const testimonials: Testimonial[] = [
     role: "Documentary Filmmaker",
     company: "Nordeste Films",
     content: "The cultural and visual richness of the Sertão is incomparable. This expedition provided me with exceptional material for my next documentary about Northeast Brazil.",
-    video: "src/assets/TestimonialsSection/video/testimonials-01.webm",
-    poster: "src/assets/TestimonialsSection/img/testimonials-img-01.png",
+    video: testimonialsVideo,
+    poster: testimonialsPoster,
     rating: 5
   },
   {

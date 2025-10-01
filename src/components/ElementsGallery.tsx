@@ -2,6 +2,14 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useRef, useState } from 'react';
 import { Camera, Sun, Users, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
+// Import das imagens
+import lightShadow01 from "../assets/ElementsGallery/LightShadow/LighandShadow-01.jpg";
+import lightShadow02 from "../assets/ElementsGallery/LightShadow/LightandShadow-02.jpg";
+import lightShadow03 from "../assets/ElementsGallery/LightShadow/LightandShadow-03.jpg";
+import humanStories01 from "../assets/ElementsGallery/HumanStories/HumanStories-01.jpg";
+import humanStories02 from "../assets/ElementsGallery/HumanStories/HumanStories-02.jpg";
+import humanStories03 from "../assets/ElementsGallery/HumanStories/HumanStories-03.jpg";
+
 interface GalleryCard {
   id: number;
   title: string;
@@ -20,9 +28,9 @@ const galleryItems: GalleryCard[] = [
     description: "Master the interplay between harsh desert light and deep shadows. Learn to capture the dramatic contrasts that define the Sertão landscape.",
     image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=dramatic%20desert%20light%20and%20shadow%20sertao%20landscape%20golden%20hour%20photography&image_size=square_hd",
     images: [
-      "src/assets/ElementsGallery/LightShadow/LighandShadow-01.jpg",
-      "src/assets/ElementsGallery/LightShadow/LightandShadow-02.jpg",
-      "src/assets/ElementsGallery/LightShadow/LightandShadow-03.jpg"
+      lightShadow01,
+      lightShadow02,
+      lightShadow03
     ],
     icon: <Sun className="w-8 h-8" />
   },
@@ -33,9 +41,9 @@ const galleryItems: GalleryCard[] = [
     description: "Connect with the people of the Sertão. Capture authentic portraits that tell stories of strength, tradition, and hope in one of Brazil's most challenging regions.",
     image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=authentic%20portrait%20elderly%20sertao%20person%20weathered%20face%20storytelling%20black%20and%20white&image_size=square_hd",
     images: [
-      "src/assets/ElementsGallery/HumanStories/HumanStories-01.jpg",
-      "src/assets/ElementsGallery/HumanStories/HumanStories-02.jpg",
-      "src/assets/ElementsGallery/HumanStories/HumanStories-03.jpg"
+      humanStories01,
+      humanStories02,
+      humanStories03
     ],
     icon: <Users className="w-8 h-8" />
   },

@@ -1,141 +1,95 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import {
-  MapPin,
-  Anchor,
-  Footprints,
-  Mountain,
-  Sailboat,
-  User,
-} from "lucide-react";
+import { useRef, useState } from "react";
+import { Anchor, Mountain } from "lucide-react";
+
+// Import das imagens
+import portalegre01 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-01.jpg";
+import portalegre02 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-02.jpg";
+import portalegre03 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-03.jpg";
+import portalegre04 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-04.jpg";
+import portalegre05 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-05.jpg";
+
+import saorafael01 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-01.jpg";
+import saorafael02 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-02.jpg";
+import saorafael03 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-03.jpg";
+import saorafael04 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-04.jpg";
+import saorafael05 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-05.jpg";
+
+import galinhos01 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-01.jpg";
+import galinhos02 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-02.jpg";
+import galinhos03 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-03.jpg";
+import galinhos04 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-04.jpg";
+import galinhos05 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-05.jpg";
 
 interface TimelineDay {
-  day: number;
+  day: string;
   title: string;
   location: string;
   description: string;
   highlights: string[];
   icon: React.ReactNode;
   image: string;
+  gallery: string[];
 }
 
 const itinerary: TimelineDay[] = [
   {
-  day: 1,
-  title: "Arrival in the Mountainous Sertão",
-  location: "Porta Alegre, Rio Grande do Norte",
-  description: "Upon arrival and check-in, we gather for introductions and a briefing about the journey ahead. Our first immersion takes us to a quilombola community, where we will document traditions and daily life. Later, we explore the mountain landscapes, photographing human presence in activities such as football, dance, and labor routines. The day closes at a scenic viewpoint, capturing the sunset over the highlands.",
-  highlights:[
-    "Arrival & check-in in Portalegre",
-    "Group introductions & immersion briefing",
-    "Visit to a quilombola community",
-    "Documentary photography of local life and traditions",
-    "Sunset photography at a mountain viewpoint"
-  ],
-  icon: <Mountain className="w-6 h-6" />,
-  image: "src/assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-01.jpg"
-},
-  {
-    day: 2,
-    title: "Journey into the Sertão",
-    location: "Welcome to the mountain refuge of Porta Alegre",
+    day: "1 - 3",
+    title: "Arrival in the Mountainous Sertão",
+    location: "Porta Alegre, Rio Grande do Norte",
     description:
-      "Travel deep into the interior. First encounters with the dramatic landscape and local communities.",
+      "Upon arrival and check-in, we gather for introductions and a briefing about the journey ahead. Our first immersion takes us to a quilombola community, where we will document traditions and daily life. Later, we explore the mountain landscapes, photographing human presence in activities such as football, dance, and labor routines. The day closes at a scenic viewpoint, capturing the sunset over the highlands.",
     highlights: [
-      "Landscape photography",
-      "Local market portraits",
-      "Sunset at Porta Alegre",
-      "Traditional dinner",
+      "Arrival & check-in in Portalegre",
+      "Group introductions & immersion briefing",
+      "Visit to a quilombola community",
+      "Documentary photography of local life and traditions",
+      "Sunset photography at a mountain viewpoint",
     ],
     icon: <Mountain className="w-6 h-6" />,
-    image:
-      "src/assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-02.jpg",
+    image: portalegre01,
+    gallery: [portalegre01, portalegre02, portalegre03, portalegre04, portalegre05],
   },
   {
-  day: 3,
-  title: "Arrival at the Potiguar Atlantis",
-  location: "São Rafael, Rio Grande do Norte",
-  description: "Welcome to São Rafael. After check-in, we'll have an introduction to the region and prepare for our first major experience: a boat trip on the Armando Ribeiro Gonçalves Dam to witness the iconic sunset over the submerged city.",
-  highlights: [
-    "Arrival & Check-in",
-    "Briefing on dam activities",
-    "Sunset boat tour",
-    "Photography of the submerged church tower",
-    "Welcome dinner with local cuisine"
-  ],
-  icon: <Anchor className="w-6 h-6" />,
-  image: "src/assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-03.jpg"
-},
-  {
-  day: 4,
-  title: "Trails and Traditions",
-  location: "Hills & Rural Area of São Rafael, RN",
-  description: "Today, we'll explore the terrain around São Rafael. The morning will be dedicated to hiking a trail through the hills, focusing on landscape photography of the caatinga biome and the views overlooking the dam. In the afternoon, we'll visit a rural community to learn about life in the sertão and listen to the stories of those who live in harmony with this environment.",
-  highlights: [
-    "Guided hike through the hills",
-    "Caatinga landscape photography",
-    "Visit to a rural property",
-    "Conversation circle with locals",
-    "Late afternoon 'sertanejo' coffee"
-  ],
-  icon: <Footprints className="w-6 h-6" />,
-  image: "src/assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-05.jpg"
-},
-  {
-    day: 5,
-    title: "Quilombola Culture and Heritage",
-    location: "Jucuri Quilombola Community, São Rafael",
+    day: "3 - 5",
+    title: "Arrival at the Potiguar Atlantis",
+    location: "São Rafael, Rio Grande do Norte",
     description:
-      "A day of deep immersion in the Jucuri Quilombola Community. We will go beyond photographic technique to connect with the stories, culture, and daily life of the residents. The focus will be on creating respectful portraits and documenting the community's richness, listening to and learning from its elders.",
+      "Welcome to São Rafael. After check-in, we'll have an introduction to the region and prepare for our first major experience: a boat trip on the Armando Ribeiro Gonçalves Dam to witness the iconic sunset over the submerged city.",
     highlights: [
-      "Conversation circle with community leaders",
-    "Experience with local culture and crafts",
-    "Portrait workshop with residents",
-    "Traditional lunch in the community",
-    "Storytelling with the elders"
+      "Arrival & Check-in",
+      "Briefing on dam activities",
+      "Sunset boat tour",
+      "Photography of the submerged church tower",
+      "Welcome dinner with local cuisine",
     ],
-    icon: <User className="w-6 h-6" />,
-    image:
-      "src/assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-03.jpg",
+    icon: <Mountain className="w-6 h-6" />,
+    image: saorafael05,
+    gallery: [saorafael01, saorafael02, saorafael03, saorafael04, saorafael05],
   },
   {
-    day: 6,
+    day: "5 - 7",
     title: "The Peninsula of Wind and Salt",
     location: "Galos & Galinhos, Rio Grande do Norte",
     description:
       "We will explore the Galinhos peninsula on an unforgettable boat trip. We'll navigate through sea arms, visit the immense white pyramids of the salt flats, climb the 'Duna do Capim' (Grass Dune) for a 360º view, and experience the tranquility of a place where time moves slower.",
     highlights: [
       "Boat tour around the peninsula",
-    "Visit to the salt flats and salt pyramids",
-    "Climb on the Duna do Capim",
-    "Donkey cart ride through the village",
-    "Sunset photography at the lighthouse"
+      "Visit to the salt flats and salt pyramids",
+      "Climb on the Duna do Capim",
+      "Donkey cart ride through the village",
+      "Sunset photography at the lighthouse",
     ],
-    icon: <Sailboat className="w-6 h-6" />,
-    image:
-      "src/assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-02.jpg",
-  },
-  {
-    day: 7,
-    title: "Reflection & Departure",
-    location: "Return to Recife",
-    description:
-      "Final portfolio review, group critique, and celebration of the journey. Departure preparations.",
-    highlights: [
-      "Portfolio presentation",
-      "Group critique",
-      "Celebration dinner",
-      "Airport transfer",
-    ],
-    icon: <MapPin className="w-6 h-6" />,
-    image:
-      "src/assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-03.jpg",
+    icon: <Anchor className="w-6 h-6" />,
+    image: galinhos03,
+    gallery: [galinhos01, galinhos02, galinhos03, galinhos04, galinhos05],
   },
 ];
 
 export default function ItineraryTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
+  const [selectedImages, setSelectedImages] = useState<{[key: number]: number}>({});
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -175,7 +129,8 @@ export default function ItineraryTimeline() {
             A Week of Immersive Exploration
           </h2>
           <p className="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto font-light leading-relaxed">
-            Step into Brazil’s Northeast, a place of light, texture, and resilience, where your photography becomes an act of discovery.
+            Step into Brazil’s Northeast, a place of light, texture, and
+            resilience, where your photography becomes an act of discovery.
           </p>
         </motion.div>
 
@@ -216,14 +171,35 @@ export default function ItineraryTimeline() {
                   className="bg-white rounded-lg shadow-lg overflow-hidden border border-stone-100"
                 >
                   {/* Image */}
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-48 overflow-hidden relative">
                     <motion.img
-                      src={day.image}
+                      src={day.gallery[selectedImages[index] || 0]}
                       alt={day.title}
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.3 }}
                     />
+                    
+                    {/* Mini Gallery Thumbnails */}
+                    <div className="absolute bottom-2 left-2 right-2 flex gap-1 justify-center">
+                      {day.gallery.map((image, imgIndex) => (
+                        <button
+                          key={imgIndex}
+                          onClick={() => setSelectedImages(prev => ({...prev, [index]: imgIndex}))}
+                          className={`w-8 h-8 rounded-sm overflow-hidden border-2 transition-all duration-200 ${
+                            (selectedImages[index] || 0) === imgIndex 
+                              ? 'border-white shadow-lg scale-110' 
+                              : 'border-white/50 hover:border-white/80'
+                          }`}
+                        >
+                          <img
+                            src={image}
+                            alt={`${day.title} ${imgIndex + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Content */}
