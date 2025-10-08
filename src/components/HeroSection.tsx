@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronDown, Users, Calendar, MapPin } from "lucide-react";
 import hero from "../assets/HeroSection/img/Hero.webp"
+import heroMobile from "../assets/HeroSection/img/Hero-Mobile.jpg"
 
 export default function HeroSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -41,7 +42,8 @@ export default function HeroSection() {
             playsInline
             preload="metadata"
             className="w-full h-full object-cover"
-            poster={hero}
+            onContextMenu={(e) => e.preventDefault()}
+            controlsList="nodownload noplaybackrate"
           >
             {/*<source
               src="https://videocdn.cdnpk.net/videos/9a9c4acb-abde-432d-98a1-a613357c6b41/horizontal/previews/clear/large.mp4?token=exp=1758283822~hmac=07bd264a0b13d8aa189f128d8f4e08bf07626946d022257fcb025d98f6ef3c95"
@@ -53,14 +55,22 @@ export default function HeroSection() {
               alt="Dramatic Sertão landscape at golden hour - Photography expedition through Northeast Brazil's Caatinga biome"
               loading="eager"
               className="w-full h-full object-cover"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              style={{ userSelect: 'none' }}
             />
           </video>
         ) : (
           <img
-            src={hero}
+            src={heroMobile}
             alt="Dramatic Sertão landscape at golden hour - Photography expedition through Northeast Brazil's Caatinga biome"
             loading="eager"
             className="w-full h-full object-cover"
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+            onDragStart={(e) => e.preventDefault()}
+            style={{ userSelect: 'none' }}
           />
         )}
       </div>

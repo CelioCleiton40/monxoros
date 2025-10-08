@@ -12,3 +12,31 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Proteções básicas contra cópia de imagens (não infalíveis) */
+img, picture, video {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Bloqueio de seleção em figuras e posters */
+figure, .no-select {
+  user-select: none;
+}
+
+/* Prevenção de arraste em links com imagens */
+a img {
+  pointer-events: none; /* evita arrastar imagens linkadas */
+}
+
+/* Classe utilitária para desabilitar clique direito via overlay (use quando necessário) */
+.protect-media {
+  position: relative;
+}
+.protect-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: auto; /* intercepta eventos do mouse */
+}

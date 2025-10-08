@@ -144,6 +144,10 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
               alt={testimonial.name}
               className="w-full h-full object-cover"
               loading="lazy"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              style={{ userSelect: 'none' }}
             />
             {/* Botão Play */}
             <button
@@ -160,6 +164,9 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
             controls
             autoPlay
             playsInline
+            controlsList="nodownload noplaybackrate"
+            onContextMenu={(e) => e.preventDefault()}
+            disablePictureInPicture
           />
         )}
       </div>

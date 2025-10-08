@@ -9,6 +9,11 @@ import lightShadow03 from "../assets/ElementsGallery/LightShadow/LightandShadow-
 import humanStories01 from "../assets/ElementsGallery/HumanStories/HumanStories-01.jpg";
 import humanStories02 from "../assets/ElementsGallery/HumanStories/HumanStories-02.jpg";
 import humanStories03 from "../assets/ElementsGallery/HumanStories/HumanStories-03.jpg";
+import humanApproach01 from "../assets/ElementsGallery/HumanApproach/HumanApproach-01.jpg";
+import humanApproach02 from "../assets/ElementsGallery/HumanApproach/HumanApproach-02.jpg";
+import humanApproach03 from "../assets/ElementsGallery/HumanApproach/HumanApproach-03.jpg";
+
+
 
 interface GalleryCard {
   id: number;
@@ -54,9 +59,9 @@ const galleryItems: GalleryCard[] = [
     description: "Practice the human approach to photography. Discover how empathy, patience, and presence open doors to authentic moments. Each frame becomes more than a picture—it becomes a shared story.",
     image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20photographer%20with%20camera%20desert%20environment%20technical%20equipment%20artistic%20composition&image_size=square_hd",
     images: [
-      "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=photographer%20desert...",
-      "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=photography%20setup...",
-      "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=human%20interaction..."
+      humanApproach01,
+      humanApproach02,
+      humanApproach03
     ],
     icon: <Camera className="w-8 h-8" />
   }

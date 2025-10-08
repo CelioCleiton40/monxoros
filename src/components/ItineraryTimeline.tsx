@@ -196,6 +196,10 @@ export default function ItineraryTimeline() {
                             src={image}
                             alt={`${day.title} ${imgIndex + 1}`}
                             className="w-full h-full object-cover"
+                            draggable={false}
+                            onContextMenu={(e) => e.preventDefault()}
+                            onDragStart={(e) => e.preventDefault()}
+                            style={{ userSelect: 'none' }}
                           />
                         </button>
                       ))}

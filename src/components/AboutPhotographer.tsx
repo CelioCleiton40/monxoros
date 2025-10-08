@@ -62,6 +62,10 @@ const AboutPhotographer = () => {
                   src="https://media-for2-2.cdn.whatsapp.net/v/t61.24694-24/56106030_2326110730993242_3929183008917028864_n.jpg?ccb=11-4&oh=01_Q5Aa2gHCNyVPcRIYRNjNCgSTB7SRyUnOMWBD8pH3I9a1gvXavQ&oe=68D949A2&_nc_sid=5e03e0&_nc_cat=110"
                   alt="José Bezerra - Master photographer specializing in Northeast Brazil landscapes and cultural documentation"
                   className="w-full h-[600px] object-cover"
+                  draggable={false}
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                  style={{ userSelect: 'none' }}
                 />
                 
                 {/* Overlay with quote */}

@@ -1,10 +1,23 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import ourphilosophy from "../assets/OurPhilosophy/OurPhilosophy.webp";
+import ourphilosophyMobile from "../assets/OurPhilosophy/OurPhilosophy-01-Mobile.jpg";
 
 export default function ManifestoSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Variantes para o container (stagger effect)
   const containerVariants = {
@@ -45,10 +58,14 @@ export default function ManifestoSection() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0 bg-top">
         <img
-          src={ourphilosophy}
+          src={isMobile ? ourphilosophyMobile : ourphilosophy}
           alt="Professional photographer capturing authentic moments in the Brazilian Sertão during golden hour expedition"
           className="w-full h-full object-cover object-bottom-right"
           loading="lazy"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
+          style={{ userSelect: 'none' }}
         />
       </div>
 
@@ -61,67 +78,62 @@ export default function ManifestoSection() {
       />
 
       {/* Content */}
-      <div className="relative z-20 h-full flex items-center px-4 md:px-8 lg:px-16">
-        <motion.div
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={containerVariants}
-          className="max-w-2xl"
+        <div className="relative z-20 h-full flex items-center px-4 md:px-8 lg:px-16 py-24">
+    <motion.div
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+      className="max-w-2xl"
+    >
+      <motion.h2
+        id="manifesto-title"
+        variants={textVariants}
+        className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-8 leading-tight drop-shadow-lg"
+      >
+        Our Philosophy
+      </motion.h2>
+
+      <motion.div variants={containerVariants} className="space-y-6 text-white/90">
+        <motion.p
+          variants={textVariants}
+          className="text-lg md:text-xl font-light leading-relaxed drop-shadow-md"
         >
-          <motion.h2
-            id="manifesto-title"
-            variants={textVariants}
-            className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-8 leading-tight"
-          >
-            Our Philosophy
-          </motion.h2>
+          Photography is not simply about recording what we see—it is about
+          unveiling what we feel.
+        </motion.p>
 
-          <motion.div
-            variants={containerVariants}
-            className="space-y-6 text-white/90"
-          >
-            <motion.p
-              variants={textVariants}
-              className="text-lg md:text-xl font-light leading-relaxed"
-            >
-              Photography is not simply about recording what we see—it is about
-              unveiling what we feel.
-            </motion.p>
+        <motion.p
+          variants={textVariants}
+          className="text-base md:text-lg font-light leading-relaxed drop-shadow-md"
+        >
+          In the Sertão, where the earth splits beneath an unforgiving sun and
+          life endures against all odds, we encounter the essence of human
+          resilience. This journey is an invitation to witness, to document,
+          and to connect with the profound beauty that arises from struggle.
+        </motion.p>
 
-            <motion.p
-              variants={textVariants}
-              className="text-base md:text-lg font-light leading-relaxed"
-            >
-              In the Sertão, where the earth splits beneath an unforgiving sun
-              and life endures against all odds, we encounter the essence of
-              human resilience. This journey is an invitation to witness, to
-              document, and to connect with the profound beauty that arises from
-              struggle.
-            </motion.p>
+        <motion.p
+          variants={textVariants}
+          className="text-base md:text-lg font-light leading-relaxed drop-shadow-md"
+        >
+          We believe in small groups, meaningful encounters, and the
+          transformative power of storytelling. Five photographers. Seven
+          days. A lifetime of stories waiting to be revealed.
+        </motion.p>
 
-            <motion.p
-              variants={textVariants}
-              className="text-base md:text-lg font-light leading-relaxed"
-            >
-              We believe in small groups, meaningful encounters, and the
-              transformative power of storytelling. Five photographers. Seven
-              days. A lifetime of stories waiting to be revealed.
-            </motion.p>
-
-            <motion.blockquote
-              variants={textVariants}
-              className="border-l-2 border-white/30 pl-6 mt-8 italic text-lg md:text-xl font-light text-white/80"
-            >
-              "Through concepts such as belonging, the immanent, and the
-              ineffable, we are able to perceive beauty—and then share it with
-              the world."
-              <footer className="text-sm mt-2 not-italic text-white/60">
-                — Jose Bezerra
-              </footer>
-            </motion.blockquote>
-          </motion.div>
-        </motion.div>
-      </div>
+        <motion.blockquote
+          variants={textVariants}
+          className="border-l-2 border-white/40 pl-6 mt-8 italic text-lg md:text-xl font-light text-white/80 drop-shadow-lg"
+        >
+          "Through concepts such as belonging, the immanent, and the ineffable,
+          we are able to perceive beauty—and then share it with the world."
+          <footer className="text-sm mt-2 not-italic text-white/60">
+            — Jose Bezerra
+          </footer>
+        </motion.blockquote>
+      </motion.div>
+    </motion.div>
+  </div>
 
       {/* Decorative Circle */}
       <motion.div

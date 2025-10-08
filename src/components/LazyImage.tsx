@@ -41,6 +41,10 @@ export default function LazyImage({ src, alt, className, placeholder }: LazyImag
           } ${className}`}
           onLoad={() => setIsLoaded(true)}
           loading="lazy"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
+          style={{ userSelect: 'none' }}
         />
       )}
       {!isLoaded && placeholder && (
