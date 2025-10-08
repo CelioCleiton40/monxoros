@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronDown, Users, Calendar, MapPin } from "lucide-react";
-import hero from "../assets/HeroSection/img/Hero.webp"
+import hero from "../assets/HeroSection/img/Hero.jpg"
 import heroMobile from "../assets/HeroSection/img/Hero-Mobile.jpg"
 
 export default function HeroSection() {
@@ -42,6 +42,7 @@ export default function HeroSection() {
             playsInline
             preload="metadata"
             className="w-full h-full object-cover"
+            poster={hero}
             onContextMenu={(e) => e.preventDefault()}
             controlsList="nodownload noplaybackrate"
           >

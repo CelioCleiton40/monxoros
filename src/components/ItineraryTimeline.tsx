@@ -1,19 +1,37 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Anchor, Mountain } from "lucide-react";
 
 // Import das imagens
+import portalegre01PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-01-PC.jpg";
+import portalegre02PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-02-PC.jpg";
+import portalegre03PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-03-PC.jpg";
+import portalegre04PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-04-PC.jpg";
+import portalegre05PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-05-PC.jpg";
+
 import portalegre01 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-01.jpg";
 import portalegre02 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-02.jpg";
 import portalegre03 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-03.jpg";
 import portalegre04 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-04.jpg";
 import portalegre05 from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-05.jpg";
 
+import saorafael01PC from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-01-PC.jpg";
+import saorafael02PC from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-02-PC.jpg";
+import saorafael03PC from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-03-PC.jpg";
+import saorafael04PC from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-04-PC.jpg";
+import saorafael05PC from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-05-PC.jpg";
+
 import saorafael01 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-01.jpg";
 import saorafael02 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-02.jpg";
 import saorafael03 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-03.jpg";
 import saorafael04 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-04.jpg";
 import saorafael05 from "../assets/exploration/Schedule-day3-5/Schedule-day3-5-SaoRafael-05.jpg";
+
+import galinhos01PC from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-01-PC.jpg";
+import galinhos02PC from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-02-PC.jpg";
+import galinhos03PC from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-03-PC.jpg";
+import galinhos04PC from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-04-PC.jpg";
+import galinhos05PC from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-05-PC.jpg";
 
 import galinhos01 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-01.jpg";
 import galinhos02 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-02.jpg";
@@ -32,65 +50,81 @@ interface TimelineDay {
   gallery: string[];
 }
 
-const itinerary: TimelineDay[] = [
-  {
-    day: "1 - 3",
-    title: "Arrival in the Mountainous Sertão",
-    location: "Porta Alegre, Rio Grande do Norte",
-    description:
-      "Upon arrival and check-in, we gather for introductions and a briefing about the journey ahead. Our first immersion takes us to a quilombola community, where we will document traditions and daily life. Later, we explore the mountain landscapes, photographing human presence in activities such as football, dance, and labor routines. The day closes at a scenic viewpoint, capturing the sunset over the highlands.",
-    highlights: [
-      "Arrival & check-in in Portalegre",
-      "Group introductions & immersion briefing",
-      "Visit to a quilombola community",
-      "Documentary photography of local life and traditions",
-      "Sunset photography at a mountain viewpoint",
-    ],
-    icon: <Mountain className="w-6 h-6" />,
-    image: portalegre01,
-    gallery: [portalegre01, portalegre02, portalegre03, portalegre04, portalegre05],
-  },
-  {
-    day: "3 - 5",
-    title: "Arrival at the Potiguar Atlantis",
-    location: "São Rafael, Rio Grande do Norte",
-    description:
-      "Welcome to São Rafael. After check-in, we'll have an introduction to the region and prepare for our first major experience: a boat trip on the Armando Ribeiro Gonçalves Dam to witness the iconic sunset over the submerged city.",
-    highlights: [
-      "Arrival & Check-in",
-      "Briefing on dam activities",
-      "Sunset boat tour",
-      "Photography of the submerged church tower",
-      "Welcome dinner with local cuisine",
-    ],
-    icon: <Mountain className="w-6 h-6" />,
-    image: saorafael05,
-    gallery: [saorafael01, saorafael02, saorafael03, saorafael04, saorafael05],
-  },
-  {
-    day: "5 - 7",
-    title: "The Peninsula of Wind and Salt",
-    location: "Galos & Galinhos, Rio Grande do Norte",
-    description:
-      "We will explore the Galinhos peninsula on an unforgettable boat trip. We'll navigate through sea arms, visit the immense white pyramids of the salt flats, climb the 'Duna do Capim' (Grass Dune) for a 360º view, and experience the tranquility of a place where time moves slower.",
-    highlights: [
-      "Boat tour around the peninsula",
-      "Visit to the salt flats and salt pyramids",
-      "Climb on the Duna do Capim",
-      "Donkey cart ride through the village",
-      "Sunset photography at the lighthouse",
-    ],
-    icon: <Anchor className="w-6 h-6" />,
-    image: galinhos03,
-    gallery: [galinhos01, galinhos02, galinhos03, galinhos04, galinhos05],
-  },
-];
+// Using itineraryEffective instead of itinerary
 
 export default function ItineraryTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
   const [selectedImages, setSelectedImages] = useState<{[key: number]: number}>({});
 
+  // Detecta viewport para alternar imagens PC/Mobile
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkViewport = () => setIsMobile(window.innerWidth <= 768);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  const itineraryEffective: TimelineDay[] = [
+    {
+      day: "1 - 3",
+      title: "Arrival in the Mountainous Sertão",
+      location: "Porta Alegre, Rio Grande do Norte",
+      description:
+        "Upon arrival and check-in, we gather for introductions and a briefing about the journey ahead. Our first immersion takes us to a quilombola community, where we will document traditions and daily life. Later, we explore the mountain landscapes, photographing human presence in activities such as football, dance, and labor routines. The day closes at a scenic viewpoint, capturing the sunset over the highlands.",
+      highlights: [
+        "Arrival & check-in in Portalegre",
+        "Group introductions & immersion briefing",
+        "Visit to a quilombola community",
+        "Documentary photography of local life and traditions",
+        "Sunset photography at a mountain viewpoint",
+      ],
+      icon: <Mountain className="w-6 h-6" />,
+      image: isMobile ? portalegre01 : portalegre01PC,
+      gallery: isMobile
+        ? [portalegre01, portalegre02, portalegre03, portalegre04, portalegre05]
+        : [portalegre01PC, portalegre02PC, portalegre03PC, portalegre04PC, portalegre05PC],
+    },
+    {
+      day: "3 - 5",
+      title: "Arrival at the Potiguar Atlantis",
+      location: "São Rafael, Rio Grande do Norte",
+      description:
+        "Welcome to São Rafael. After check-in, we'll have an introduction to the region and prepare for our first major experience: a boat trip on the Armando Ribeiro Gonçalves Dam to witness the iconic sunset over the submerged city.",
+      highlights: [
+        "Arrival & Check-in",
+        "Briefing on dam activities",
+        "Sunset boat tour",
+        "Photography of the submerged church tower",
+        "Welcome dinner with local cuisine",
+      ],
+      icon: <Mountain className="w-6 h-6" />,
+      image: isMobile ? saorafael05 : saorafael05PC,
+      gallery: isMobile
+        ? [saorafael01, saorafael02, saorafael03, saorafael04, saorafael05]
+        : [saorafael01PC, saorafael02PC, saorafael03PC, saorafael04PC, saorafael05PC],
+    },
+    {
+      day: "5 - 7",
+      title: "The Peninsula of Wind and Salt",
+      location: "Galos & Galinhos, Rio Grande do Norte",
+      description:
+        "We will explore the Galinhos peninsula on an unforgettable boat trip. We'll navigate through sea arms, visit the immense white pyramids of the salt flats, climb the 'Duna do Capim' (Grass Dune) for a 360º view, and experience the tranquility of a place where time moves slower.",
+      highlights: [
+        "Boat tour around the peninsula",
+        "Visit to the salt flats and salt pyramids",
+        "Climb on the Duna do Capim",
+        "Donkey cart ride through the village",
+        "Sunset photography at the lighthouse",
+      ],
+      icon: <Anchor className="w-6 h-6" />,
+      image: isMobile ? galinhos03 : galinhos03PC,
+      gallery: isMobile
+        ? [galinhos01, galinhos02, galinhos03, galinhos04, galinhos05]
+        : [galinhos01PC, galinhos02PC, galinhos03PC, galinhos04PC, galinhos05PC],
+    },
+  ];
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -144,7 +178,7 @@ export default function ItineraryTimeline() {
           {/* Timeline Line */}
           <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-stone-200" />
 
-          {itinerary.map((day, index) => (
+          {itineraryEffective.map((day, index) => (
             <motion.div
               key={day.day}
               variants={itemVariants}

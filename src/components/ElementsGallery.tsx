@@ -1,18 +1,28 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Camera, Sun, Users, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import das imagens
-import lightShadow01 from "../assets/ElementsGallery/LightShadow/LighandShadow-01.jpg";
-import lightShadow02 from "../assets/ElementsGallery/LightShadow/LightandShadow-02.jpg";
-import lightShadow03 from "../assets/ElementsGallery/LightShadow/LightandShadow-03.jpg";
-import humanStories01 from "../assets/ElementsGallery/HumanStories/HumanStories-01.jpg";
-import humanStories02 from "../assets/ElementsGallery/HumanStories/HumanStories-02.jpg";
-import humanStories03 from "../assets/ElementsGallery/HumanStories/HumanStories-03.jpg";
-import humanApproach01 from "../assets/ElementsGallery/HumanApproach/HumanApproach-01.jpg";
-import humanApproach02 from "../assets/ElementsGallery/HumanApproach/HumanApproach-02.jpg";
-import humanApproach03 from "../assets/ElementsGallery/HumanApproach/HumanApproach-03.jpg";
+import lightShadow01 from "../assets/ElementsGallery/LightShadow/LightandShadow-01-PC.jpg";
+import lightShadow02 from "../assets/ElementsGallery/LightShadow/LightandShadow-02-PC.jpg";
+import lightShadow03 from "../assets/ElementsGallery/LightShadow/LightandShadow-03-PC.jpg";
+import humanStories01 from "../assets/ElementsGallery/HumanStories/HumanStories-01-PC.jpg";
+import humanStories02 from "../assets/ElementsGallery/HumanStories/HumanStories-02-PC.jpg";
+import humanStories03 from "../assets/ElementsGallery/HumanStories/HumanStories-03-PC.jpg";
+import humanApproach01 from "../assets/ElementsGallery/HumanApproach/HumanApproach-01-PC.jpg";
+import humanApproach02 from "../assets/ElementsGallery/HumanApproach/HumanApproach-02-PC.jpg";
+import humanApproach03 from "../assets/ElementsGallery/HumanApproach/HumanApproach-03-PC.jpg";
 
+// Versões Mobile
+import lightShadow01Mobile from "../assets/ElementsGallery/LightShadow/LightandShadow-01.jpg";
+import lightShadow02Mobile from "../assets/ElementsGallery/LightShadow/LightandShadow-02.jpg";
+import lightShadow03Mobile from "../assets/ElementsGallery/LightShadow/LightandShadow-03.jpg";
+import humanStories01Mobile from "../assets/ElementsGallery/HumanStories/HumanStories-01.jpg";
+import humanStories02Mobile from "../assets/ElementsGallery/HumanStories/HumanStories-02.jpg";
+import humanStories03Mobile from "../assets/ElementsGallery/HumanStories/HumanStories-03.jpg";
+import humanApproach01Mobile from "../assets/ElementsGallery/HumanApproach/HumanApproach-01.jpg";
+import humanApproach02Mobile from "../assets/ElementsGallery/HumanApproach/HumanApproach-02.jpg";
+import humanApproach03Mobile from "../assets/ElementsGallery/HumanApproach/HumanApproach-03.jpg";
 
 
 interface GalleryCard {
@@ -25,53 +35,59 @@ interface GalleryCard {
   icon: React.ReactNode;
 }
 
-const galleryItems: GalleryCard[] = [
-  {
-    id: 1,
-    title: "Light & Shadow",
-    subtitle: "The Dance of Elements",
-    description: "Master the interplay between harsh desert light and deep shadows. Learn to capture the dramatic contrasts that define the Sertão landscape.",
-    image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=dramatic%20desert%20light%20and%20shadow%20sertao%20landscape%20golden%20hour%20photography&image_size=square_hd",
-    images: [
-      lightShadow01,
-      lightShadow02,
-      lightShadow03
-    ],
-    icon: <Sun className="w-8 h-8" />
-  },
-  {
-    id: 2,
-    title: "Human Stories",
-    subtitle: "Portraits of Resilience",
-    description: "Connect with the people of the Sertão. Capture authentic portraits that tell stories of strength, tradition, and hope in one of Brazil's most challenging regions.",
-    image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=authentic%20portrait%20elderly%20sertao%20person%20weathered%20face%20storytelling%20black%20and%20white&image_size=square_hd",
-    images: [
-      humanStories01,
-      humanStories02,
-      humanStories03
-    ],
-    icon: <Users className="w-8 h-8" />
-  },
-  {
-    id: 3,
-    title: "Human Approach",
-    subtitle: "Advanced Techniques",
-    description: "Practice the human approach to photography. Discover how empathy, patience, and presence open doors to authentic moments. Each frame becomes more than a picture—it becomes a shared story.",
-    image: "https://trae-api-us.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20photographer%20with%20camera%20desert%20environment%20technical%20equipment%20artistic%20composition&image_size=square_hd",
-    images: [
-      humanApproach01,
-      humanApproach02,
-      humanApproach03
-    ],
-    icon: <Camera className="w-8 h-8" />
-  }
-];
+// Using effectiveGalleryItems instead of galleryItems
 
 export default function ElementsGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Detecta viewport para alternar imagens PC/Mobile
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkViewport = () => setIsMobile(window.innerWidth <= 768);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  // Definição dos itens da galeria conforme dispositivo
+  const effectiveGalleryItems: GalleryCard[] = [
+    {
+      id: 1,
+      title: "Light & Shadow",
+      subtitle: "The Dance of Elements",
+      description: "Master the interplay between harsh desert light and deep shadows. Learn to capture the dramatic contrasts that define the Sertão landscape.",
+      image: isMobile ? lightShadow01Mobile : lightShadow01,
+      images: isMobile
+        ? [lightShadow01Mobile, lightShadow02Mobile, lightShadow03Mobile]
+        : [lightShadow01, lightShadow02, lightShadow03],
+      icon: <Sun className="w-8 h-8" />
+    },
+    {
+      id: 2,
+      title: "Human Stories",
+      subtitle: "Portraits of Resilience",
+      description: "Connect with the people of the Sertão. Capture authentic portraits that tell stories of strength, tradition, and hope in one of Brazil's most challenging regions.",
+      image: isMobile ? humanStories01Mobile : humanStories01,
+      images: isMobile
+        ? [humanStories01Mobile, humanStories02Mobile, humanStories03Mobile]
+        : [humanStories01, humanStories02, humanStories03],
+      icon: <Users className="w-8 h-8" />
+    },
+    {
+      id: 3,
+      title: "Human Approach",
+      subtitle: "Advanced Techniques",
+      description: "Practice the human approach to photography. Discover how empathy, patience, and presence open doors to authentic moments. Each frame becomes more than a picture—it becomes a shared story.",
+      image: isMobile ? humanApproach01Mobile : humanApproach01,
+      images: isMobile
+        ? [humanApproach01Mobile, humanApproach02Mobile, humanApproach03Mobile]
+        : [humanApproach01, humanApproach02, humanApproach03],
+      icon: <Camera className="w-8 h-8" />
+    }
+  ];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -93,14 +109,14 @@ export default function ElementsGallery() {
 
   const handlePrev = () => {
     if (activeCardIndex !== null) {
-      const images = galleryItems[activeCardIndex].images;
+      const images = effectiveGalleryItems[activeCardIndex].images;
       setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
     }
   };
 
   const handleNext = () => {
     if (activeCardIndex !== null) {
-      const images = galleryItems[activeCardIndex].images;
+      const images = effectiveGalleryItems[activeCardIndex].images;
       setActiveImageIndex((prev) => (prev + 1) % images.length);
     }
   };
@@ -127,7 +143,7 @@ export default function ElementsGallery() {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-          {galleryItems.map((item, index) => (
+          {effectiveGalleryItems.map((item, index) => (
             <motion.div
               key={item.id}
               custom={index}
@@ -253,9 +269,9 @@ export default function ElementsGallery() {
             </button>
 
             <motion.img
-              key={galleryItems[activeCardIndex].images[activeImageIndex]}
-              src={galleryItems[activeCardIndex].images[activeImageIndex]}
-              alt={galleryItems[activeCardIndex].title}
+              key={effectiveGalleryItems[activeCardIndex].images[activeImageIndex]}
+              src={effectiveGalleryItems[activeCardIndex].images[activeImageIndex]}
+              alt={effectiveGalleryItems[activeCardIndex].title}
               className="max-h-[80vh] max-w-[90vw] object-contain rounded-lg shadow-lg"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
