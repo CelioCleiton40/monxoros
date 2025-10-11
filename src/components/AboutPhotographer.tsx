@@ -13,6 +13,7 @@ import BehindTheScenes04 from "../assets/AboutPhotographer/Gallery/BehindTheScen
 import BehindTheScenes05 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-05-PC.jpg";
 import BehindTheScenes06 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-06-PC.jpg";
 import BehindTheScenes07 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-07-PC.jpg";
+import JbSegundo from "../assets/AboutPhotographer/Photographer/JbSegundo.jpg";
 
 const AboutPhotographer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -104,7 +105,7 @@ const AboutPhotographer = () => {
                 className="relative overflow-hidden rounded-2xl shadow-2xl"
               >
                 <img
-                  src="https://media-for2-2.cdn.whatsapp.net/v/t61.24694-24/56106030_2326110730993242_3929183008917028864_n.jpg?ccb=11-4&oh=01_Q5Aa2gHCNyVPcRIYRNjNCgSTB7SRyUnOMWBD8pH3I9a1gvXavQ&oe=68D949A2&_nc_sid=5e03e0&_nc_cat=110"
+                  src={JbSegundo}
                   alt="José Bezerra - Master photographer specializing in Northeast Brazil landscapes and cultural documentation"
                   className="w-full h-auto aspect-[3/4] object-cover"
                   loading="eager"
@@ -353,10 +354,9 @@ const AboutPhotographer = () => {
                       className="flex flex-col items-center justify-center w-full h-full"
                     >
                       <p className="text-sm text-stone-300 mb-3 select-none">
-                        Clique na imagem para voltar
+                        Click on the image to return
                       </p>
                       <motion.div
-                        // E AQUI TAMBÉM!
                         layoutId={selectedImage}
                         onClick={() => setSelectedImage(null)}
                         className="w-full max-w-4xl max-h-[80vh] rounded-md shadow-2xl cursor-pointer overflow-hidden"
