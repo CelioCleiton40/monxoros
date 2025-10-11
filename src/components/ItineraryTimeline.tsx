@@ -149,7 +149,8 @@ export default function ItineraryTimeline() {
   };
 
   return (
-    <section ref={containerRef} className="py-20 bg-white">
+    <section id="itinerary"
+    ref={containerRef} className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-8">
         {/* Section Header */}
         <motion.div

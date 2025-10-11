@@ -11,7 +11,7 @@ export default function Footer() {
     },
     {
       icon: <Instagram className="w-5 h-5" />,
-      href: "#",
+      href: "https://www.instagram.com/jb_segundo/",
       label: "Instagram",
       handle: "@jb_segundo"
     },
@@ -30,9 +30,9 @@ export default function Footer() {
   ];
 
   const quickLinks = [
-    { name: "About the Expedition", href: "#manifesto" },
+    { name: "About the Expedition", href: "#itinerary" },
     { name: "Gallery", href: "#gallery" },
-    { name: "Itinerary", href: "#itinerary" },
+    { name: "Testimonials", href: "#testimonials" },
     { name: "Apply Now", href: "#invitation" },
     { name: "About José Bezerra", href: "#about" }
   ];
