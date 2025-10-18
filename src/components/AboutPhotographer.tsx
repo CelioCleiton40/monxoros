@@ -1,18 +1,10 @@
 import {
   motion,
-  AnimatePresence,
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Camera, Award, Globe, Heart, X } from "lucide-react";
-import BehindTheScenes01 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-01-PC.jpg";
-import BehindTheScenes02 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-02-PC.jpg";
-import BehindTheScenes03 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-03-PC.jpg";
-import BehindTheScenes04 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-04-PC.jpg";
-import BehindTheScenes05 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-05-PC.jpg";
-import BehindTheScenes06 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-06-PC.jpg";
-import BehindTheScenes07 from "../assets/AboutPhotographer/Gallery/BehindTheScenes-07-PC.jpg";
+import { useRef } from "react";
+import { Camera, Award, Globe, Heart, ExternalLink } from "lucide-react";
 import JbSegundo from "../assets/AboutPhotographer/Photographer/JbSegundo.jpg";
 
 const AboutPhotographer = () => {
@@ -23,16 +15,6 @@ const AboutPhotographer = () => {
   });
   const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-  const galleryImages = [
-    BehindTheScenes01,
-    BehindTheScenes02,
-    BehindTheScenes03,
-    BehindTheScenes04,
-    BehindTheScenes05,
-    BehindTheScenes06,
-    BehindTheScenes07,
-  ];
 
   const achievements = [
     {
@@ -57,27 +39,6 @@ const AboutPhotographer = () => {
       description: "Dedicated to authentic storytelling and community respect",
     },
   ];
-
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    document.body.style.overflow = isGalleryOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isGalleryOpen]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (selectedImage) setSelectedImage(null);
-        else setIsGalleryOpen(false);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selectedImage]);
 
   return (
     <section
@@ -149,7 +110,7 @@ const AboutPhotographer = () => {
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="space-y-8"
           >
-            {/* ... (resto do conteúdo da direita permanece igual) ... */}
+            
             <div>
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -267,115 +228,16 @@ const AboutPhotographer = () => {
 
         <motion.button
           onClick={() => {
-            setIsGalleryOpen(true);
-            setSelectedImage(null);
+            window.open('https://github.com/jbsegundo');
           }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
-          className="mt-12 px-8 py-3 rounded-full bg-stone-800 text-white text-sm uppercase tracking-wide font-medium shadow-md hover:bg-stone-700 transition-all duration-150"
+          className="mt-12 px-8 py-3 rounded-full bg-stone-800 text-white text-sm uppercase tracking-wide font-medium shadow-md hover:bg-stone-700 transition-all duration-150 flex items-center gap-2"
         >
-          Discover More of My Work
+          Discover My Work & Products
+          <ExternalLink className="w-4 h-4" />
         </motion.button>
       </motion.div>
-
-      {/* GALLERY */}
-      <AnimatePresence>
-        {isGalleryOpen && (
-          <motion.div
-            key="gallery-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }} // Transição mais suave
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-            onClick={(e) => {
-              if (e.currentTarget === e.target) {
-                setIsGalleryOpen(false);
-                setSelectedImage(null);
-              }
-            }}
-          >
-            {/*  Modal */}
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative w-full max-w-6xl"
-            >
-              <button
-                aria-label="Close gallery"
-                onClick={() => {
-                  setIsGalleryOpen(false);
-                  setSelectedImage(null);
-                }}
-                className="absolute -top-10 right-0 md:top-3 md:right-3 z-60 bg-black/50 hover:bg-black/40 rounded-full p-2 text-white"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              <div className="bg-white/5 rounded-lg p-3 md:p-6">
-                {/* AnimatePresence interna para a transição entre grid e imagem */}
-                <AnimatePresence>
-                  {!selectedImage ? (
-                    <motion.div
-                      key="thumb-grid"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"
-                    >
-                      {galleryImages.map((src, idx) => (
-                        <motion.div
-                          layoutId={src}
-                          key={src}
-                          onClick={() => setSelectedImage(src)}
-                          whileHover={{ scale: 1.03, y: -2 }}
-                          transition={{ duration: 0.1 }}
-                          className="w-full h-28 sm:h-32 md:h-28 rounded-md cursor-pointer shadow-sm overflow-hidden"
-                        >
-                          <motion.img
-                            src={src}
-                            alt={`Thumbnail ${idx + 1}`}
-                            loading="lazy"
-                            className="w-full h-full object-cover"
-                            draggable={false}
-                          />
-                        </motion.div>
-                      ))}
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="enlarged"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="flex flex-col items-center justify-center w-full h-full"
-                    >
-                      <p className="text-sm text-stone-300 mb-3 select-none">
-                        Click on the image to return
-                      </p>
-                      <motion.div
-                        layoutId={selectedImage}
-                        onClick={() => setSelectedImage(null)}
-                        className="w-full max-w-4xl max-h-[80vh] rounded-md shadow-2xl cursor-pointer overflow-hidden"
-                      >
-                        <motion.img
-                          src={selectedImage}
-                          alt="Enlarged"
-                          className="w-full h-full object-contain"
-                          draggable={false}
-                        />
-                      </motion.div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { Anchor, Mountain } from "lucide-react";
 
 // Import das imagens
@@ -50,15 +50,16 @@ interface TimelineDay {
   gallery: string[];
 }
 
-// Using itineraryEffective instead of itinerary
-
 export default function ItineraryTimeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.1 });
   const [selectedImages, setSelectedImages] = useState<{[key: number]: number}>({});
 
-  // Detecta viewport para alternar imagens PC/Mobile
+  // --- State Hooks ---
   const [isMobile, setIsMobile] = useState(false);
+
+  // --- Effect Hooks ---
+  // Effect to detect screen size (mobile/desktop)
   useEffect(() => {
     const checkViewport = () => setIsMobile(window.innerWidth <= 768);
     checkViewport();
@@ -66,7 +67,9 @@ export default function ItineraryTimeline() {
     return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
-  const itineraryEffective: TimelineDay[] = [
+  // --- Memoized Data ---
+  // IMPROVEMENT: `useMemo` optimizes performance by recreating the list only when `isMobile` changes.
+  const itineraryEffective: TimelineDay[] = useMemo(() => [
     {
       day: "1 - 3",
       title: "Arrival in the Mountainous Sertão",
@@ -124,7 +127,8 @@ export default function ItineraryTimeline() {
         ? [galinhos01, galinhos02, galinhos03, galinhos04, galinhos05]
         : [galinhos01PC, galinhos02PC, galinhos03PC, galinhos04PC, galinhos05PC],
     },
-  ];
+  ], [isMobile]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -206,7 +210,7 @@ export default function ItineraryTimeline() {
                   className="bg-white rounded-lg shadow-lg overflow-hidden border border-stone-100"
                 >
                   {/* Image */}
-                  <div className="h-48 overflow-hidden relative">
+                  <div className="h-80 overflow-hidden relative">
                     <motion.img
                       src={day.gallery[selectedImages[index] || 0]}
                       alt={day.title}
