@@ -1,0 +1,72 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="twitterBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#57534e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#78716c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a8a29e;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="twitterOverlay" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0.1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#twitterBg)"/>
+  <rect width="1200" height="600" fill="url(#twitterOverlay)"/>
+  
+  <!-- Decorative Pattern -->
+  <g opacity="0.1">
+    <circle cx="200" cy="150" r="30" fill="#fbbf24"/>
+    <circle cx="1000" cy="450" r="50" fill="#f59e0b"/>
+    <circle cx="150" cy="400" r="20" fill="#fbbf24"/>
+    <circle cx="1050" cy="150" r="35" fill="#f59e0b"/>
+  </g>
+  
+  <!-- Main Content -->
+  <g transform="translate(80, 120)">
+    <!-- Main Title -->
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="white">
+      Sertão Photography
+    </text>
+    <text x="0" y="70" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="white">
+      Expedition
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="130" font-family="Arial, sans-serif" font-size="28" font-weight="300" fill="#f3f4f6">
+      Capture the Soul of Northeast Brazil
+    </text>
+    
+    <!-- Key Details -->
+    <g transform="translate(0, 180)">
+      <text x="0" y="0" font-family="Arial, sans-serif" font-size="22" fill="#fbbf24">
+        ✦ 7 Days of Intensive Photography
+      </text>
+      <text x="0" y="40" font-family="Arial, sans-serif" font-size="22" fill="#fbbf24">
+        ✦ Limited to 5 Photographers
+      </text>
+      <text x="0" y="80" font-family="Arial, sans-serif" font-size="22" fill="#fbbf24">
+        ✦ January 15-21, 2025
+      </text>
+    </g>
+    
+    <!-- Website -->
+    <text x="0" y="320" font-family="Arial, sans-serif" font-size="18" fill="#d1d5db">
+      monxorosexpedition.com
+    </text>
+  </g>
+  
+  <!-- Desert Landscape Silhouette -->
+  <g transform="translate(700, 350)">
+    <path d="M0,100 Q50,80 100,90 Q150,70 200,85 Q250,60 300,75 Q350,50 400,65 L400,150 L0,150 Z" 
+          fill="#44403c" opacity="0.6"/>
+    <path d="M50,120 Q100,100 150,110 Q200,90 250,105 Q300,80 350,95 L350,150 L50,150 Z" 
+          fill="#57534e" opacity="0.4"/>
+  </g>
+  
+  <!-- Sun -->
+  <circle cx="950" cy="180" r="40" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="950" cy="180" r="50" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.4"/>
+</svg>
