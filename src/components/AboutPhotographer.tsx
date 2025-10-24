@@ -26,7 +26,7 @@ const AboutPhotographer = () => {
     {
       icon: <Globe className="w-6 h-6" />,
       title: "Global Experience",
-      description: "Over 20 years documenting cultures around the world",
+      description: "Over 16 years documenting communities and culture across Brazil’s Northeast.",
     },
     {
       icon: <Camera className="w-6 h-6" />,
@@ -128,7 +128,7 @@ const AboutPhotographer = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="text-xl md:text-2xl font-light text-stone-600 mb-6"
               >
-                JB Segundo
+                Jose Bezerra
               </motion.h3>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -149,26 +149,16 @@ const AboutPhotographer = () => {
               className="space-y-4"
             >
               <p className="text-stone-700 leading-relaxed font-light text-lg">
-                Born in the heart of Brazil's Northeast, JB Segundo has spent
-                over two decades documenting the resilience and beauty of
-                marginalized communities worldwide. His work transcends mere
-                documentation—it's a bridge between worlds, connecting viewers
-                to the profound humanity that exists in every corner of our
-                planet.
+                Born in the heart of Brazil’s Northeast, Jose Bezerra has spent the past eleven years capturing the resilience and quiet beauty of communities across the region. His work goes beyond documentation—it serves as a bridge between worlds, inviting viewers to connect with the profound humanity found in the everyday lives of the people he photographs.
               </p>
 
               <p className="text-stone-600 leading-relaxed font-light">
-                JB Segundo that the most powerful photographs are born from
-                genuine human connection. His approach combines technical
-                mastery with deep cultural sensitivity, ensuring that every
-                image honors both the subject and the story being told.
+                Jose Bezerra believes that the most powerful photographs emerge from genuine human connection. His approach blends technical precision with deep cultural empathy, ensuring that every image honors both the subject and the story it reveals.
+His photography is also used by social scientists, universities, and educators to illustrate the culture of the Northeast, providing a visual window into the traditions, labor, and daily life of these communities.
               </p>
 
               <p className="text-stone-600 leading-relaxed font-light">
-                "The Sertão taught me that beauty isn't found in perfection—it's
-                discovered in authenticity, in the raw truth of human
-                experience. This expedition is my invitation for you to see
-                through different eyes and capture stories that matter."
+                “The Sertão taught me that beauty isn’t found in perfection—it’s discovered in authenticity, in the raw truth of human experience. This expedition is my invitation for you to see with different eyes and to capture stories that truly matter.”
               </p>
             </motion.div>
 
@@ -220,7 +210,7 @@ const AboutPhotographer = () => {
                 and the perspectives you'll bring to this ancient landscape."
               </p>
               <p className="text-stone-500 text-sm mt-3 font-medium">
-                — JB Segundo
+                — Jose Bezerra
               </p>
             </motion.div>
           </motion.div>

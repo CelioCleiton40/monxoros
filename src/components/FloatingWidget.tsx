@@ -33,7 +33,7 @@ const FloatingWidget = () => {
     },
     {
       icon: <Users className="w-4 h-4" />,
-      label: "5 Spots",
+      label: "6 Spots",
       detail: "Only 3 remaining"
     },
     {

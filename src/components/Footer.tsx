@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
-import { Facebook,Instagram, Mail, Phone, MapPin, Camera, Heart } from 'lucide-react';
+import { Facebook,Instagram, Mail, Phone, MapPin, Camera } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [
     {
       icon: <Facebook className="w-5 h-5" />,
-      href: "#",
+      href: "https://www.facebook.com/josebezerrafotografia",
       label: "Facebook",
-      handle: "@jb_segundo"
+      handle: "@josebezerrafotografia"
     },
     {
       icon: <Instagram className="w-5 h-5" />,
@@ -17,15 +17,15 @@ export default function Footer() {
     },
     {
       icon: <Mail className="w-5 h-5" />,
-      href: "mailto:jbsegundo@sertaoexpedition.com",
+      href: "mailto:josebezerra@monxorosexpedition.com",
       label: "Email",
-      handle: "jbsegundo@sertaoexpedition.com"
+      handle: "josebezerra@monxorosexpedition.com"
     },
     {
       icon: <Phone className="w-5 h-5" />,
-      href: "tel:+5511999999999",
+      href: "+1(407)4850370",
       label: "Phone",
-      handle: "+55 11 99999-9999"
+      handle: "+1(407)4850370"
     }
   ];
 
@@ -154,14 +154,14 @@ export default function Footer() {
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-2 text-stone-500 text-sm">
-              <span>© 2025 Sertão Photographic Expedition.</span>
+              <span>© 2025 Monxoros Expedition.</span>
               <span className="hidden md:inline">All rights reserved.</span>
             </div>
             
             <div className="flex items-center space-x-2 text-stone-500 text-sm">
-              <span>Made with</span>
-              <Heart className="w-4 h-4 text-red-500" />
-              <span>for authentic storytelling</span>
+              <span>Developed by</span>
+              
+              <span>Célio Cleiton, Software Engineer.</span>
             </div>
           </div>
         </motion.div>

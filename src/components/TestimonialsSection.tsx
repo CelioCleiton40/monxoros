@@ -20,10 +20,10 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 4,
-    name: "Carlos Mendes",
-    role: "Documentary Filmmaker",
-    company: "Nordeste Films",
-    content: "The cultural and visual richness of the Sertão is incomparable. This expedition provided me with exceptional material for my next documentary about Northeast Brazil.",
+    name: "Guilherme Negreiros",
+    role: "Attorney",
+    company: "Law Firm",
+    content: "I never imagined this experience would change my life. Years have passed, yet I still remember the night sky over Serra Branca.",
     video: testimonialsVideo,
     poster: testimonialsPoster,
     rating: 5
