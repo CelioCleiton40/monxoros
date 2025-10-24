@@ -1,21 +1,92 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Mail, Send } from "lucide-react";
+import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import type { NewsletterFormState } from "../types/newsletter";
+import { createNewsletterService } from "../services/newsletterService";
+import { validateAndNormalizeEmail } from "../utils/validation";
+import { getNewsletterConfig, DEFAULT_SUBSCRIBER_TAGS } from "../config/newsletter";
 
 const Newsletter = () => {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formState, setFormState] = useState<NewsletterFormState>({
+    email: "",
+    isLoading: false,
+    isSubmitted: false,
+    error: null,
+    successMessage: null
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const newsletterService = createNewsletterService(getNewsletterConfig());
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      console.log("Newsletter subscription:", email);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setEmail("");
-      }, 3000);
+    
+    // Reset previous states
+    setFormState(prev => ({
+      ...prev,
+      isLoading: true,
+      error: null,
+      successMessage: null
+    }));
+
+    try {
+      // Validate email before sending
+      const validation = validateAndNormalizeEmail(formState.email);
+      
+      if (!validation.isValid) {
+        setFormState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: validation.error || 'Invalid email'
+        }));
+        return;
+      }
+
+      // Subscribe to newsletter
+      const result = await newsletterService.subscribe({
+        email: validation.normalizedEmail,
+        tags: DEFAULT_SUBSCRIBER_TAGS
+      });
+
+      if (result.success) {
+        setFormState(prev => ({
+          ...prev,
+          isLoading: false,
+          isSubmitted: true,
+          successMessage: result.message,
+          email: ""
+        }));
+
+        // Reset success state after 5 seconds
+        setTimeout(() => {
+          setFormState(prev => ({
+            ...prev,
+            isSubmitted: false,
+            successMessage: null
+          }));
+        }, 5000);
+      } else {
+        setFormState(prev => ({
+          ...prev,
+          isLoading: false,
+          error: result.message
+        }));
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      setFormState(prev => ({
+        ...prev,
+        isLoading: false,
+        error: 'Internal error. Please try again later.'
+      }));
     }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState(prev => ({
+      ...prev,
+      email: e.target.value,
+      error: null // Clear error when user starts typing
+    }));
   };
 
   return (
@@ -41,41 +112,79 @@ const Newsletter = () => {
             and behind-the-scenes stories from the Sertão.
           </p>
 
-          {!isSubmitted ? (
+          {/* Error Message */}
+          {formState.error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-900/50 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6 flex items-center gap-2"
+            >
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              <p className="text-sm">{formState.error}</p>
+            </motion.div>
+          )}
+
+          {/* Success Message */}
+          {formState.isSubmitted && formState.successMessage && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-green-900/50 border border-green-700 text-green-200 px-6 py-4 rounded-lg max-w-md mx-auto mb-6 flex items-center gap-3"
+            >
+              <CheckCircle className="w-6 h-6 flex-shrink-0" />
+              <div>
+                <p className="font-medium">Successfully subscribed!</p>
+                <p className="text-sm text-green-300 mt-1">
+                  {formState.successMessage}
+                </p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Newsletter Form */}
+          {!formState.isSubmitted && (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <label htmlFor="email" className="sr-only">Email address</label>
               <input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formState.email}
+                onChange={handleEmailChange}
                 placeholder="Enter your email"
                 aria-label="Email address"
-                className="flex-1 px-4 py-3 rounded-lg bg-stone-800 border border-stone-700 text-white placeholder-stone-400 focus:outline-none focus:border-stone-500 transition-colors"
+                disabled={formState.isLoading}
+                className={`flex-1 px-4 py-3 rounded-lg bg-stone-800 border text-white placeholder-stone-400 focus:outline-none transition-colors ${
+                  formState.error 
+                    ? 'border-red-500 focus:border-red-400' 
+                    : 'border-stone-700 focus:border-stone-500'
+                } ${formState.isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 required
               />
               <motion.button
                 type="submit"
                 aria-label="Subscribe to newsletter"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 bg-stone-600 hover:bg-stone-500 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                disabled={formState.isLoading || !formState.email.trim()}
+                whileHover={!formState.isLoading ? { scale: 1.05 } : {}}
+                whileTap={!formState.isLoading ? { scale: 0.95 } : {}}
+                className={`px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 min-w-[120px] ${
+                  formState.isLoading || !formState.email.trim()
+                    ? 'bg-stone-700 cursor-not-allowed opacity-50'
+                    : 'bg-stone-600 hover:bg-stone-500'
+                }`}
               >
-                Subscribe
-                <Send className="w-4 h-4" />
+                {formState.isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Subscribing...
+                  </>
+                ) : (
+                  <>
+                    Subscribe
+                    <Send className="w-4 h-4" />
+                  </>
+                )}
               </motion.button>
             </form>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-green-800 text-green-100 px-6 py-4 rounded-lg max-w-md mx-auto"
-            >
-              <p className="font-medium">Thank you for subscribing!</p>
-              <p className="text-sm text-green-200 mt-1">
-                You'll receive our next update soon.
-              </p>
-            </motion.div>
           )}
 
           <p className="text-stone-500 text-sm mt-6">

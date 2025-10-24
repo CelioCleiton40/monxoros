@@ -206,7 +206,7 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                   {...register('phone')}
                   onChange={handlePhoneChange}
                   className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-colors text-stone-900"
-                  placeholder="(11) 99999-9999"
+                  placeholder="+1(999)9999999"
                   maxLength={15}
                   aria-label="Phone number"
                   aria-describedby={errors.phone ? "phone-error" : undefined}
