@@ -2,9 +2,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import type { NewsletterFormState } from "../types/newsletter";
-import { createNewsletterService } from "../services/newsletterService";
+import NewsletterService from "../services/newsletterService";
 import { validateAndNormalizeEmail } from "../utils/validation";
-import { getNewsletterConfig, DEFAULT_SUBSCRIBER_TAGS } from "../config/newsletter";
+import { getNewsletterConfig } from "../config/newsletter";
 
 const Newsletter = () => {
   const [formState, setFormState] = useState<NewsletterFormState>({
@@ -15,10 +15,13 @@ const Newsletter = () => {
     successMessage: null
   });
 
-  const newsletterService = createNewsletterService(getNewsletterConfig());
+  const newsletterService = new NewsletterService(getNewsletterConfig());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    console.log('🔍 Newsletter Form Submission Started');
+    console.log('📧 Raw email input:', formState.email);
     
     // Reset previous states
     setFormState(prev => ({
@@ -31,8 +34,10 @@ const Newsletter = () => {
     try {
       // Validate email before sending
       const validation = validateAndNormalizeEmail(formState.email);
+      console.log('✅ Email validation result:', validation);
       
       if (!validation.isValid) {
+        console.log('❌ Email validation failed:', validation.error);
         setFormState(prev => ({
           ...prev,
           isLoading: false,
@@ -41,13 +46,22 @@ const Newsletter = () => {
         return;
       }
 
-      // Subscribe to newsletter
-      const result = await newsletterService.subscribe({
+      // Prepare data to send
+      const subscriptionData = {
         email: validation.normalizedEmail,
-        tags: DEFAULT_SUBSCRIBER_TAGS
-      });
+        name: '' // Google Sheets usa apenas name e email
+      };
+      
+      console.log('📤 Data being sent to Google Sheets:', subscriptionData);
+      console.log('🔗 Newsletter service config:', getNewsletterConfig());
+
+      // Subscribe to newsletter
+      const result = await newsletterService.subscribe(subscriptionData);
+      
+      console.log('📥 Response from Google Sheets:', result);
 
       if (result.success) {
+        console.log('✅ Newsletter subscription successful!');
         setFormState(prev => ({
           ...prev,
           isLoading: false,
@@ -65,6 +79,7 @@ const Newsletter = () => {
           }));
         }, 5000);
       } else {
+        console.log('❌ Newsletter subscription failed:', result.message);
         setFormState(prev => ({
           ...prev,
           isLoading: false,
@@ -72,7 +87,13 @@ const Newsletter = () => {
         }));
       }
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
+      console.error('💥 Newsletter subscription error:', error);
+      console.log('🔍 Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        type: typeof error
+      });
+      
       setFormState(prev => ({
         ...prev,
         isLoading: false,

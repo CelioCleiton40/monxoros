@@ -1,4 +1,4 @@
-// Newsletter configuration management
+// Newsletter configuration management for Google Sheets integration
 
 import type { NewsletterConfig } from '../types/newsletter';
 
@@ -8,22 +8,14 @@ import type { NewsletterConfig } from '../types/newsletter';
  */
 export const getNewsletterConfig = (): NewsletterConfig => {
   const config: NewsletterConfig = {
-    apiKey: import.meta.env.VITE_MAILCHIMP_API_KEY || '',
-    audienceId: import.meta.env.VITE_MAILCHIMP_AUDIENCE_ID || '',
-    serverPrefix: import.meta.env.VITE_MAILCHIMP_SERVER_PREFIX || 'us1'
+    apiUrl: import.meta.env.VITE_GOOGLE_SHEETS_API_URL || ''
   };
 
   // Validate required configuration in development
   if (import.meta.env.DEV) {
-    const missingVars: string[] = [];
-    
-    if (!config.apiKey) missingVars.push('VITE_MAILCHIMP_API_KEY');
-    if (!config.audienceId) missingVars.push('VITE_MAILCHIMP_AUDIENCE_ID');
-    if (!config.serverPrefix) missingVars.push('VITE_MAILCHIMP_SERVER_PREFIX');
-    
-    if (missingVars.length > 0) {
+    if (!config.apiUrl) {
       console.warn(
-        `Newsletter: Missing environment variables: ${missingVars.join(', ')}\n` +
+        'Newsletter: Missing environment variable: VITE_GOOGLE_SHEETS_API_URL\n' +
         'Newsletter functionality will be limited. Please check your .env file.'
       );
     }
@@ -38,7 +30,7 @@ export const getNewsletterConfig = (): NewsletterConfig => {
  */
 export const isNewsletterConfigured = (): boolean => {
   const config = getNewsletterConfig();
-  return !!(config.apiKey && config.audienceId && config.serverPrefix);
+  return !!config.apiUrl;
 };
 
 /**
@@ -48,31 +40,6 @@ export const isNewsletterConfigured = (): boolean => {
 export const isDevMode = (): boolean => {
   return import.meta.env.VITE_NEWSLETTER_DEV_MODE === 'true' || import.meta.env.DEV;
 };
-
-/**
- * Default newsletter configuration
- */
-export const DEFAULT_NEWSLETTER_CONFIG: Partial<NewsletterConfig> = {
-  serverPrefix: 'us1'
-};
-
-/**
- * Newsletter service endpoints
- */
-export const NEWSLETTER_ENDPOINTS = {
-  MEMBERS: (serverPrefix: string, audienceId: string) => 
-    `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members`,
-  MEMBER: (serverPrefix: string, audienceId: string, memberHash: string) => 
-    `https://${serverPrefix}.api.mailchimp.com/3.0/lists/${audienceId}/members/${memberHash}`
-};
-
-/**
- * Default tags for newsletter subscribers
- */
-export const DEFAULT_SUBSCRIBER_TAGS = [
-  'Sertão Expedition',
-  'Website Signup'
-];
 
 /**
  * Newsletter error messages in English

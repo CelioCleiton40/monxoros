@@ -19,6 +19,18 @@ dist-ssr
 .env.test.local
 .env.production.local
 
+# Documentation and sensitive files
+.trae/
+docs/
+documentation/
+*.md.backup
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+config/secrets/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

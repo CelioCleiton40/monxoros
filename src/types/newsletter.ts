@@ -1,62 +1,68 @@
-// Types for newsletter functionality and Mailchimp integration
-
+/**
+ * Dados enviados pelo usuário ao se inscrever na newsletter.
+ */
 export interface NewsletterSubscription {
   email: string;
-  firstName?: string;
-  lastName?: string;
-  tags?: string[];
+  name?: string;
 }
 
-export interface MailchimpMember {
-  email_address: string;
-  status: 'subscribed' | 'unsubscribed' | 'cleaned' | 'pending';
-  merge_fields?: {
-    FNAME?: string;
-    LNAME?: string;
-    [key: string]: string | number | boolean | null | undefined;
-  };
-  tags?: string[];
+/**
+ * Estrutura enviada ao Google Sheets via Apps Script.
+ */
+export interface GoogleSheetsSubscriber {
+  name: string;
+  email: string;
+  timestamp?: string; // opcional - pode ser adicionado no backend
 }
 
-export interface MailchimpResponse {
-  id: string;
-  email_address: string;
-  unique_email_id: string;
-  status: string;
-  merge_fields: {
-    FNAME: string;
-    LNAME: string;
-    [key: string]: string | number | boolean | null | undefined;
-  };
-  timestamp_signup?: string;
-  timestamp_opt?: string;
+/**
+ * Estrutura de resposta padrão da API do Apps Script.
+ * Pode retornar texto simples ou objeto JSON.
+ */
+export interface GoogleSheetsResponse {
+  success: boolean;
+  message: string;
+  timestamp?: string;
+  insertedRow?: number;
 }
 
-export interface MailchimpError {
-  type: string;
-  title: string;
-  status: number;
-  detail: string;
-  instance: string;
+/**
+ * Estrutura de erro padronizada para erros do Google Sheets.
+ */
+export interface GoogleSheetsError {
+  success: false;
+  error: string;
+  code?: number;
 }
 
+/**
+ * Estrutura de resposta principal do serviço de newsletter no frontend.
+ */
 export interface NewsletterServiceResponse {
   success: boolean;
   message: string;
-  data?: MailchimpResponse;
-  error?: MailchimpError;
+  data?: GoogleSheetsResponse;
+  error?: GoogleSheetsError;
+  status?: number; // status HTTP opcional (200, 400, 500)
 }
 
+/**
+ * Estado do formulário de inscrição da newsletter no frontend.
+ */
 export interface NewsletterFormState {
   email: string;
+  name?: string;
   isLoading: boolean;
   isSubmitted: boolean;
   error: string | null;
   successMessage: string | null;
 }
 
+/**
+ * Configuração geral do serviço de newsletter.
+ */
 export interface NewsletterConfig {
-  apiKey: string;
-  audienceId: string;
-  serverPrefix: string;
+  apiUrl: string;
+  sheetId?: string; // opcional - para controle interno
+  scriptVersion?: string; // versão do Apps Script, se quiser rastrear
 }
