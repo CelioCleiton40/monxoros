@@ -10,7 +10,7 @@ export interface NewsletterSubscription {
  * Estrutura enviada ao Google Sheets via Apps Script.
  */
 export interface GoogleSheetsSubscriber {
-  name: string;
+  name?: string;
   email: string;
   timestamp?: string; // opcional - pode ser adicionado no backend
 }
