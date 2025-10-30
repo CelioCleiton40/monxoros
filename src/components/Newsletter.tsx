@@ -4,7 +4,6 @@ import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import type { NewsletterFormState } from "../types/newsletter";
 import NewsletterService from "../services/newsletterService";
 import { validateAndNormalizeEmail } from "../utils/validation";
-import { getNewsletterConfig } from "../config/newsletter";
 
 const Newsletter = () => {
   const [formState, setFormState] = useState<NewsletterFormState>({
@@ -15,7 +14,7 @@ const Newsletter = () => {
     successMessage: null
   });
 
-  const newsletterService = new NewsletterService(getNewsletterConfig());
+  const newsletterService = new NewsletterService();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

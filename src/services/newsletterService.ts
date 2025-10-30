@@ -1,17 +1,14 @@
 import type { 
   NewsletterSubscription, 
   NewsletterServiceResponse,
-  NewsletterConfig,
   GoogleScriptResponse
 } from '../types/newsletter';
 import { validateAndNormalizeEmail, isDisposableEmail } from '../utils/validation';
 import { SCRIPT_URL, NEWSLETTER_MESSAGES } from '../config/newsletter';
 
 class NewsletterService {
-  private config: NewsletterConfig;
-
-  constructor(config: NewsletterConfig) {
-    this.config = config;
+  constructor() {
+    // Service initialized with default configuration from config/newsletter.ts
   }
 
   /**
