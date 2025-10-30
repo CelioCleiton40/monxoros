@@ -1,12 +1,11 @@
 import type { 
   NewsletterSubscription, 
-  GoogleSheetsSubscriber,
   NewsletterServiceResponse,
   NewsletterConfig,
-  GoogleSheetsResponse
+  GoogleScriptResponse
 } from '../types/newsletter';
 import { validateAndNormalizeEmail, isDisposableEmail } from '../utils/validation';
-import { NEWSLETTER_MESSAGES } from '../config/newsletter';
+import { SCRIPT_URL, NEWSLETTER_MESSAGES } from '../config/newsletter';
 
 class NewsletterService {
   private config: NewsletterConfig;
@@ -16,7 +15,7 @@ class NewsletterService {
   }
 
   /**
-   * Subscribes a user to the newsletter via Google Sheets API
+   * Subscribes a user to the newsletter via Google Apps Script
    * @param subscription - Newsletter subscription data
    * @returns Promise with service response
    */
@@ -39,40 +38,29 @@ class NewsletterService {
         };
       }
 
-      // 🧾 Prepare subscriber data
-      const subscriberData: GoogleSheetsSubscriber = {
-        name: subscription.name?.trim() || '',
-        email: validation.normalizedEmail
-      };
+      // 📤 Send via Google Apps Script
+      const response = await this.sendViaGoogleScript(validation.normalizedEmail);
 
-      // 📤 Send to Google Sheets (Apps Script)
-      const response = await this.sendToGoogleSheets(subscriberData);
-
-      // ✅ Handle success and duplicate cases
-      if (response.message?.includes('sucesso')) {
+      // ✅ Handle success
+      if (response.success) {
         return {
           success: true,
-          message: NEWSLETTER_MESSAGES.SUCCESS,
+          message: response.message || NEWSLETTER_MESSAGES.SUCCESS,
           data: response
         };
       }
 
-      if (response.message?.includes('já cadastrado')) {
-        return {
-          success: false,
-          message: NEWSLETTER_MESSAGES.ALREADY_SUBSCRIBED
-        };
-      }
-
-      // ⚠️ Fallback for unknown responses
+      // ⚠️ Handle error response
       return {
-        success: !!response.success,
-        message: response.message || NEWSLETTER_MESSAGES.INTERNAL_ERROR
+        success: false,
+        message: response.error || NEWSLETTER_MESSAGES.INTERNAL_ERROR,
+        error: {
+          success: false,
+          error: response.error || 'Unknown error'
+        }
       };
 
     } catch (error) {
-      console.error('Newsletter subscription error:', error);
-
       if (error instanceof Error) {
         // 🌐 Network issues
         if (error.message.includes('fetch') || error.message.includes('network')) {
@@ -85,43 +73,42 @@ class NewsletterService {
 
       return {
         success: false,
-        message: NEWSLETTER_MESSAGES.UNKNOWN_ERROR
+        message: NEWSLETTER_MESSAGES.UNKNOWN_ERROR,
+        error: {
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        }
       };
     }
   }
 
   /**
-   * Sends subscriber data to Google Sheets via Apps Script API
-   * @param subscriberData - Subscriber data to send
-   * @returns Promise with Google Sheets response
+   * Sends email via Google Apps Script
+   * @param email - User email to subscribe
+   * @returns Promise with Google Apps Script response
    */
-  private async sendToGoogleSheets(subscriberData: GoogleSheetsSubscriber): Promise<GoogleSheetsResponse> {
-    if (!this.config.apiUrl) {
-      throw new Error('Google Sheets API URL not configured');
-    }
-
-    // 🔒 Ensure proper HTTPS call
-    const cleanUrl = this.config.apiUrl.trim();
-    const response = await fetch(cleanUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache'
-      },
-      body: JSON.stringify(subscriberData)
-    });
-
-    if (!response.ok) {
-      const text = await response.text();
-      throw new Error(`API error ${response.status}: ${text}`);
-    }
-
-    // 🔍 Handle potential plain text or JSON responses
-    const text = await response.text();
+  private async sendViaGoogleScript(email: string): Promise<GoogleScriptResponse> {
     try {
-      return JSON.parse(text) as GoogleSheetsResponse;
-    } catch {
-      return { success: true, message: text } as GoogleSheetsResponse;
+      const formData = new FormData();
+      formData.append('email', email);
+
+      const response = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw new Error(`Erro ao conectar com o Google Apps Script: ${error.message}`);
+      }
+      
+      throw new Error('Erro desconhecido ao conectar com o Google Apps Script');
     }
   }
 
@@ -129,16 +116,16 @@ class NewsletterService {
    * Validates if the service is properly configured
    */
   isConfigured(): boolean {
-    return Boolean(this.config.apiUrl?.startsWith('https://'));
+    return !!SCRIPT_URL && SCRIPT_URL.includes('script.google.com');
   }
 
   /**
    * Gets current configuration (for debugging)
    */
-  getConfigStatus(): { configured: boolean; hasApiUrl: boolean } {
+  getConfigStatus(): { configured: boolean; scriptUrl: string } {
     return {
       configured: this.isConfigured(),
-      hasApiUrl: !!this.config.apiUrl
+      scriptUrl: SCRIPT_URL
     };
   }
 }

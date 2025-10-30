@@ -7,32 +7,21 @@ export interface NewsletterSubscription {
 }
 
 /**
- * Estrutura enviada ao Google Sheets via Apps Script.
+ * Estrutura de resposta do Google Apps Script.
  */
-export interface GoogleSheetsSubscriber {
-  name?: string;
-  email: string;
-  timestamp?: string; // opcional - pode ser adicionado no backend
-}
-
-/**
- * Estrutura de resposta padrão da API do Apps Script.
- * Pode retornar texto simples ou objeto JSON.
- */
-export interface GoogleSheetsResponse {
+export interface GoogleScriptResponse {
   success: boolean;
-  message: string;
-  timestamp?: string;
-  insertedRow?: number;
+  message?: string;
+  error?: string;
 }
 
 /**
- * Estrutura de erro padronizada para erros do Google Sheets.
+ * Estrutura de erro padronizada para erros do Google Apps Script.
  */
-export interface GoogleSheetsError {
+export interface GoogleScriptError {
   success: false;
   error: string;
-  code?: number;
+  status?: number;
 }
 
 /**
@@ -41,8 +30,8 @@ export interface GoogleSheetsError {
 export interface NewsletterServiceResponse {
   success: boolean;
   message: string;
-  data?: GoogleSheetsResponse;
-  error?: GoogleSheetsError;
+  data?: GoogleScriptResponse;
+  error?: GoogleScriptError;
   status?: number; // status HTTP opcional (200, 400, 500)
 }
 
@@ -62,7 +51,5 @@ export interface NewsletterFormState {
  * Configuração geral do serviço de newsletter.
  */
 export interface NewsletterConfig {
-  apiUrl: string;
-  sheetId?: string; // opcional - para controle interno
-  scriptVersion?: string; // versão do Apps Script, se quiser rastrear
+  scriptUrl: string;
 }

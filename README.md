@@ -10,7 +10,8 @@ A modern, responsive web application built for showcasing and managing registrat
 - **Responsive Landing Page** - Fully optimized for all devices
 - **Interactive Timeline** - Detailed 7-day expedition itinerary
 - **Photo Gallery** - Stunning landscape and cultural photography showcase
-- **Newsletter Integration** - Google Sheets-powered subscription system
+- **Automated Newsletter System** - Complete subscription workflow with Google Sheets integration
+- **Email Automation** - Automated welcome emails via Gmail integration
 - **Application Form** - Complete registration system for participants
 - **Testimonials** - Video testimonials from previous expedition members
 
@@ -26,7 +27,9 @@ A modern, responsive web application built for showcasing and managing registrat
 - **React 18** - Latest React features with hooks
 - **Vite** - Lightning-fast build tool and dev server
 - **Form Validation** - Zod schema validation with React Hook Form
-- **Google Sheets API** - Direct integration for data collection
+- **Google Sheets API** - Direct integration for subscriber data management
+- **Gmail API Integration** - Automated email delivery system
+- **Email Validation** - Advanced validation including disposable email detection
 - **PWA Ready** - Progressive Web App capabilities
 
 ## 🚀 Quick Start
@@ -59,6 +62,7 @@ A modern, responsive web application built for showcasing and managing registrat
    ```env
    VITE_GOOGLE_SHEETS_API_URL=your_google_apps_script_url
    VITE_DEV_MODE=true
+   # Note: Gmail API credentials are configured server-side for security
    ```
 
 4. **Start development server**
@@ -122,26 +126,78 @@ The application is built with a mobile-first approach:
 - **Tablet** (768px+) - Enhanced layout with more content
 - **Desktop** (1024px+) - Full-featured experience with advanced interactions
 
+## 📧 Newsletter System & Email Automation
+
+### Overview
+The application features a complete automated newsletter system that handles subscriber management and welcome email delivery:
+
+### 🔄 Workflow Process
+1. **User Subscription** - Users subscribe via the newsletter form on the website
+2. **Data Validation** - Advanced email validation including disposable email detection
+3. **Google Sheets Storage** - Subscriber data is automatically stored in Google Sheets
+4. **Automated Welcome Email** - Gmail integration sends personalized welcome emails
+5. **Error Handling** - Comprehensive error management with user feedback
+
+### 📊 Data Management
+- **Google Sheets Integration** - All subscriber data is stored securely
+- **Real-time Updates** - Instant data synchronization
+- **Data Validation** - Server-side validation for data integrity
+- **Privacy Compliant** - No sensitive data exposed in client-side code
+
+### 📬 Email Features
+- **Automated Delivery** - Welcome emails sent immediately upon subscription
+- **Gmail Integration** - Reliable email delivery through Gmail API
+- **Personalized Content** - Dynamic email content based on subscriber data
+- **Delivery Tracking** - Success/failure status tracking
+
+### 🔧 Technical Implementation
+- **Google Apps Script** - Server-side processing and Gmail integration
+- **RESTful API** - Clean API endpoints for data operations
+- **Error Handling** - Graceful error management with user notifications
+- **Security** - API credentials secured server-side, no exposure in frontend
+
+### 🛡️ Security & Privacy
+- **No Exposed Credentials** - All API keys and sensitive data kept server-side
+- **Data Validation** - Multiple layers of validation for data integrity
+- **CORS Configuration** - Proper security headers and access control
+- **Privacy First** - Minimal data collection, secure storage practices
+
 ## 🔗 Google Sheets Integration
 
-The newsletter system integrates directly with Google Sheets:
+The newsletter and email system integrates with Google services:
 
-1. **Google Apps Script** - Handles form submissions
-2. **CORS Configuration** - Proper headers for web requests
-3. **Data Validation** - Server-side email validation
-4. **Error Handling** - Graceful error management
+1. **Google Apps Script** - Handles form submissions and email automation
+2. **Google Sheets API** - Stores subscriber data securely
+3. **Gmail API** - Sends automated welcome emails
+4. **Data Validation** - Server-side email validation and spam protection
+5. **Error Handling** - Graceful error management with user feedback
 
-### Setting up Google Sheets Integration
+### Setting up the Integration
 
-1. Create a Google Sheet with columns: `Email`, `Date`, `Status`
-2. Create a Google Apps Script with the provided code
-3. Deploy as web app with public access
-4. Add the deployment URL to your `.env` file
+1. **Google Sheets Setup**
+   - Create a Google Sheet with columns: `Email`, `Date`, `Status`, `Source`
+   - Configure proper permissions for the Apps Script
+
+2. **Google Apps Script Configuration**
+   - Create a new Apps Script project
+   - Enable Gmail API and Sheets API
+   - Configure OAuth scopes for email sending
+   - Deploy as web app with appropriate permissions
+
+3. **Environment Configuration**
+   - Add the Apps Script deployment URL to your `.env` file
+   - Ensure proper CORS configuration
+   - Test the integration in development mode
+
+4. **Security Considerations**
+   - All API credentials are stored server-side
+   - No sensitive information exposed in frontend code
+   - Proper error handling prevents data leakage
 
 ## 🎯 Expedition Details
 
 **Monxoros Expedition** is an exclusive photography workshop featuring:
-- **Duration**: 7 days (January 15-21, 2026)
+- **Duration**: 7 days (March 15-21, 2026)
 - **Group Size**: Limited to 6 photographers
 - **Locations**: Portalegre, São Rafael, Galinhos (Northeast Brazil)
 - **Focus**: Landscape, cultural, and documentary photography

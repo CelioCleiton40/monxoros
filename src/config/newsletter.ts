@@ -1,25 +1,20 @@
-// Newsletter configuration management for Google Sheets integration
+// Newsletter configuration management for Google Apps Script integration
 
 import type { NewsletterConfig } from '../types/newsletter';
 
 /**
- * Gets newsletter configuration from environment variables
+ * Google Apps Script URL for newsletter subscription
+ */
+export const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfRsN_F4qM6rOOH9gJyy8jmVIfdEmJ0qA_KyUwHt9FzxtReaKx_p1imPTlRPf8JPUH/exec';
+
+/**
+ * Gets newsletter configuration
  * @returns NewsletterConfig object
  */
 export const getNewsletterConfig = (): NewsletterConfig => {
   const config: NewsletterConfig = {
-    apiUrl: import.meta.env.VITE_GOOGLE_SHEETS_API_URL || ''
+    scriptUrl: SCRIPT_URL
   };
-
-  // Validate required configuration in development
-  if (import.meta.env.DEV) {
-    if (!config.apiUrl) {
-      console.warn(
-        'Newsletter: Missing environment variable: VITE_GOOGLE_SHEETS_API_URL\n' +
-        'Newsletter functionality will be limited. Please check your .env file.'
-      );
-    }
-  }
 
   return config;
 };
@@ -29,8 +24,7 @@ export const getNewsletterConfig = (): NewsletterConfig => {
  * @returns boolean indicating if configuration is complete
  */
 export const isNewsletterConfigured = (): boolean => {
-  const config = getNewsletterConfig();
-  return !!config.apiUrl;
+  return !!SCRIPT_URL;
 };
 
 /**

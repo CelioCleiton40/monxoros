@@ -114,7 +114,7 @@ export default function HeroSection() {
             </div>
             <div className="flex items-center gap-2 drop-shadow-sm">
               <Calendar className="w-5 h-5 text-amber-400 drop-shadow-sm" />
-              <span className="text-sm md:text-base">January 2026</span>
+              <span className="text-sm md:text-base">March 2026</span>
             </div>
           </div>
 

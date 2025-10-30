@@ -20,9 +20,6 @@ const Newsletter = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    console.log('🔍 Newsletter Form Submission Started');
-    console.log('📧 Raw email input:', formState.email);
-    
     // Reset previous states
     setFormState(prev => ({
       ...prev,
@@ -34,10 +31,8 @@ const Newsletter = () => {
     try {
       // Validate email before sending
       const validation = validateAndNormalizeEmail(formState.email);
-      console.log('✅ Email validation result:', validation);
       
       if (!validation.isValid) {
-        console.log('❌ Email validation failed:', validation.error);
         setFormState(prev => ({
           ...prev,
           isLoading: false,
@@ -51,17 +46,11 @@ const Newsletter = () => {
         email: validation.normalizedEmail,
         name: '' // Google Sheets usa apenas name e email
       };
-      
-      console.log('📤 Data being sent to Google Sheets:', subscriptionData);
-      console.log('🔗 Newsletter service config:', getNewsletterConfig());
 
       // Subscribe to newsletter
       const result = await newsletterService.subscribe(subscriptionData);
-      
-      console.log('📥 Response from Google Sheets:', result);
 
       if (result.success) {
-        console.log('✅ Newsletter subscription successful!');
         setFormState(prev => ({
           ...prev,
           isLoading: false,
@@ -79,21 +68,13 @@ const Newsletter = () => {
           }));
         }, 5000);
       } else {
-        console.log('❌ Newsletter subscription failed:', result.message);
         setFormState(prev => ({
           ...prev,
           isLoading: false,
           error: result.message
         }));
       }
-    } catch (error) {
-      console.error('💥 Newsletter subscription error:', error);
-      console.log('🔍 Error details:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined,
-        type: typeof error
-      });
-      
+    } catch {
       setFormState(prev => ({
         ...prev,
         isLoading: false,

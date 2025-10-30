@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Calendar, Users, MapPin, DollarSign } from "lucide-react";
-import { FormSchemaType } from "../schemas/formSchema";
 import ApplicationForm from "./ApplicationForm";
 
 export default function InvitationSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (data: FormSchemaType) => {
-    console.log("Form submitted:", data);
+  const handleSubmit = async () => {
     setIsSubmitted(true);
     setTimeout(() => {
       setIsModalOpen(false);
@@ -18,7 +16,7 @@ export default function InvitationSection() {
   };
 
   const expeditionDetails = [
-    { icon: <Calendar className="w-6 h-6" />, label: "Dates", value: "January 15–21, 2026" },
+    { icon: <Calendar className="w-6 h-6" />, label: "Dates", value: "March 15–21, 2026" },
     { icon: <Users className="w-6 h-6" />, label: "Group Size", value: "6 Photographers Only" },
     { icon: <MapPin className="w-6 h-6" />, label: "Location", value: "Northeast Brazil" },
     { icon: <DollarSign className="w-6 h-6" />, label: "Investment", value: "To Be Agreed" },
