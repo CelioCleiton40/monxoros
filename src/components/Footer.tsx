@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Facebook,Instagram, Mail, Phone, MapPin, Camera } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const socialLinks = [
@@ -34,7 +35,8 @@ export default function Footer() {
     { name: "Gallery", href: "#gallery" },
     { name: "Testimonials", href: "#testimonials" },
     { name: "Apply Now", href: "#invitation" },
-    { name: "About José Bezerra", href: "#about" }
+    { name: "About José Bezerra", href: "#about" },
+    { name: "Privacy Policy", href: "/privacy-policy", isRoute: true }
   ];
 
   const containerVariants = {
@@ -109,12 +111,21 @@ export default function Footer() {
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <a
-                    href={link.href}
-                    className="text-stone-400 hover:text-white transition-colors duration-300 font-light text-sm"
-                  >
-                    {link.name}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      className="text-stone-400 hover:text-white transition-colors duration-300 font-light text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-stone-400 hover:text-white transition-colors duration-300 font-light text-sm"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </motion.li>
               ))}
             </ul>
@@ -153,9 +164,17 @@ export default function Footer() {
           className="border-t border-stone-700 mt-12 pt-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-2 text-stone-500 text-sm">
-              <span>© 2025 Monxoros Expedition.</span>
-              <span className="hidden md:inline">All rights reserved.</span>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-stone-500 text-sm">
+              <div className="flex items-center space-x-2">
+                <span>© 2025 Monxoros Expedition.</span>
+                <span className="hidden md:inline">All rights reserved.</span>
+              </div>
+              <Link 
+                to="/privacy-policy" 
+                className="text-stone-400 hover:text-white transition-colors duration-300 underline"
+              >
+                Privacy Policy
+              </Link>
             </div>
             
             <div className="flex items-center space-x-2 text-stone-500 text-sm">
