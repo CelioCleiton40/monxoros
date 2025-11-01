@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-// Regex para validação de telefone brasileiro
+// Regex for Brazilian phone validation
 const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
 
 export const formSchema = z.object({

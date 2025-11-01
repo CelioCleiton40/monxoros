@@ -87,7 +87,7 @@ export default function Footer() {
             
             <p className="text-stone-300 font-light leading-relaxed mb-6 max-w-md">
               An intimate photographic journey through Northeast Brazil, 
-              where ancient landscapes meet timeless stories. Limited to 5 
+              where ancient landscapes meet timeless stories. Limited to 6 
               photographers for an authentic, transformative experience.
             </p>
 

@@ -13,23 +13,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Proteções básicas contra cópia de imagens (não infalíveis) */
+/* Basic protections against image copying (not foolproof) */
 img, picture, video {
   -webkit-user-drag: none;
   user-select: none;
 }
 
-/* Bloqueio de seleção em figuras e posters */
+/* Block selection on figures and posters */
 figure, .no-select {
   user-select: none;
 }
 
-/* Prevenção de arraste em links com imagens */
+/* Prevent dragging on links with images */
 a img {
-  pointer-events: none; /* evita arrastar imagens linkadas */
+  pointer-events: none; /* prevents dragging linked images */
 }
 
-/* Classe utilitária para desabilitar clique direito via overlay (use quando necessário) */
+/* Utility class to disable right-click via overlay (use when necessary) */
 .protect-media {
   position: relative;
 }
@@ -38,5 +38,5 @@ a img {
   position: absolute;
   inset: 0;
   background: transparent;
-  pointer-events: auto; /* intercepta eventos do mouse */
+  pointer-events: auto; /* intercepts mouse events */
 }

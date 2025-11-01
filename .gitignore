@@ -32,6 +32,11 @@ documentation/
 secrets/
 config/secrets/
 
+# Server-side scripts (Google Apps Script)
+server/
+server/google-apps-script/
+*.gs
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -45,7 +45,7 @@ export const validateAndNormalizeEmail = (email: string): {
     return {
       isValid: false,
       normalizedEmail: '',
-      error: 'Email é obrigatório'
+      error: 'Email is required'
     };
   }
   
@@ -53,7 +53,7 @@ export const validateAndNormalizeEmail = (email: string): {
     return {
       isValid: false,
       normalizedEmail,
-      error: 'Por favor, insira um email válido'
+      error: 'Please enter a valid email address'
     };
   }
   

@@ -161,6 +161,10 @@ The application features a complete automated newsletter system that handles sub
 - **Data Validation** - Multiple layers of validation for data integrity
 - **CORS Configuration** - Proper security headers and access control
 - **Privacy First** - Minimal data collection, secure storage practices
+- **CSRF Protection** - Cross-Site Request Forgery protection on all forms
+- **Input Sanitization** - Advanced input filtering and XSS prevention
+- **HTTP Security Headers** - Comprehensive security headers implementation
+- **Rate Limiting** - Server-side rate limiting to prevent abuse
 
 ## 🔗 Google Sheets Integration
 
@@ -208,6 +212,29 @@ The newsletter and email system integrates with Google services:
 - **Core Web Vitals**: Optimized for excellent user experience
 - **Bundle Size**: Optimized with code splitting
 - **Image Optimization**: Responsive images with lazy loading
+
+## 🔒 Security Implementation
+
+### Frontend Security
+- **CSRF Protection**: All forms include CSRF tokens to prevent cross-site request forgery attacks
+- **Input Sanitization**: Advanced filtering removes dangerous characters and prevents XSS attacks
+- **Content Security Policy**: Strict CSP headers prevent unauthorized script execution
+- **HTTP Security Headers**: Comprehensive security headers including X-Frame-Options, X-Content-Type-Options
+- **Form Validation**: Client-side and server-side validation with Zod schemas
+
+### Backend Security
+- **Rate Limiting**: Server-side rate limiting prevents abuse and DoS attacks
+- **Origin Validation**: Requests validated against allowed domains
+- **Data Sanitization**: All inputs sanitized before processing
+- **Secure Token Management**: CSRF tokens with expiration and one-time use
+- **Email Validation**: Advanced email validation including disposable email detection
+
+### Privacy & Data Protection
+- **Minimal Data Collection**: Only necessary information is collected
+- **Secure Storage**: All data stored securely with proper access controls
+- **No Client-Side Secrets**: API keys and sensitive data kept server-side only
+- **GDPR Compliance**: Privacy-first approach with user consent management
+- **Data Encryption**: Sensitive data encrypted in transit and at rest
 
 ## 🚀 Deployment
 

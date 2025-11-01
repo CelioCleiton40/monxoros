@@ -1,5 +1,5 @@
 /**
- * Dados enviados pelo usuário ao se inscrever na newsletter.
+ * Data sent by the user when subscribing to the newsletter.
  */
 export interface NewsletterSubscription {
   email: string;
@@ -7,7 +7,7 @@ export interface NewsletterSubscription {
 }
 
 /**
- * Estrutura de resposta do Google Apps Script.
+ * Google Apps Script response structure.
  */
 export interface GoogleScriptResponse {
   success: boolean;
@@ -16,7 +16,7 @@ export interface GoogleScriptResponse {
 }
 
 /**
- * Estrutura de erro padronizada para erros do Google Apps Script.
+ * Standardized error structure for Google Apps Script errors.
  */
 export interface GoogleScriptError {
   success: false;
@@ -25,18 +25,18 @@ export interface GoogleScriptError {
 }
 
 /**
- * Estrutura de resposta principal do serviço de newsletter no frontend.
+ * Main response structure of the newsletter service on the frontend.
  */
 export interface NewsletterServiceResponse {
   success: boolean;
   message: string;
   data?: GoogleScriptResponse;
   error?: GoogleScriptError;
-  status?: number; // status HTTP opcional (200, 400, 500)
+  status?: number; // Optional HTTP status (200, 400, 500)
 }
 
 /**
- * Estado do formulário de inscrição da newsletter no frontend.
+ * Newsletter subscription form state on the frontend.
  */
 export interface NewsletterFormState {
   email: string;
@@ -48,7 +48,7 @@ export interface NewsletterFormState {
 }
 
 /**
- * Configuração geral do serviço de newsletter.
+ * General newsletter service configuration.
  */
 export interface NewsletterConfig {
   scriptUrl: string;

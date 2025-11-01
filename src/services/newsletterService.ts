@@ -102,10 +102,10 @@ class NewsletterService {
       return result;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        throw new Error(`Erro ao conectar com o Google Apps Script: ${error.message}`);
+        throw new Error(`Error connecting to Google Apps Script: ${error.message}`);
       }
       
-      throw new Error('Erro desconhecido ao conectar com o Google Apps Script');
+      throw new Error('Unknown error connecting to Google Apps Script');
     }
   }
 

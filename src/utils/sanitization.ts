@@ -13,14 +13,19 @@ export const sanitizeTextInput = (input: string): string => {
   const withoutHtml = input.replace(/<[^>]*>/g, '');
   
   // Remove potentially dangerous characters but keep international chars
-  const sanitized = withoutHtml.replace(/[<>{}[\]\\]/g, '');
+  const sanitized = withoutHtml
+    .replace(/[<>{}[\]\\]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/data:/gi, '')
+    .replace(/vbscript:/gi, '')
+    .replace(/on\w+=/gi, '');
   
   // Trim whitespace and limit length
   return sanitized.trim().slice(0, 1000);
 };
 
 /**
- * Sanitizes email input
+ * Sanitizes email input with enhanced validation
  */
 export const sanitizeEmail = (email: string): string => {
   if (!email) return '';
@@ -28,8 +33,14 @@ export const sanitizeEmail = (email: string): string => {
   // Remove spaces and convert to lowercase
   const cleaned = email.trim().toLowerCase();
   
-  // Remove potentially dangerous characters
-  return cleaned.replace(/[<>{}[\]\\]/g, '').slice(0, 100);
+  // Remove potentially dangerous characters and scripts
+  const sanitized = cleaned
+    .replace(/[<>{}[\]\\]/g, '')
+    .replace(/javascript:/gi, '')
+    .replace(/data:/gi, '')
+    .replace(/vbscript:/gi, '');
+  
+  return sanitized.slice(0, 100);
 };
 
 /**

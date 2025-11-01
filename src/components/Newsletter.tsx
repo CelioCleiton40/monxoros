@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Mail, Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { NewsletterFormState } from "../types/newsletter";
 import NewsletterService from "../services/newsletterService";
 import { validateAndNormalizeEmail } from "../utils/validation";
+import { CSRFTokenField } from "./form/CSRFTokenField";
 
 const Newsletter = () => {
   const [formState, setFormState] = useState<NewsletterFormState>({
@@ -43,7 +45,7 @@ const Newsletter = () => {
       // Prepare data to send
       const subscriptionData = {
         email: validation.normalizedEmail,
-        name: '' // Google Sheets usa apenas name e email
+        name: '' // Google Sheets uses only name and email
       };
 
       // Subscribe to newsletter
@@ -145,6 +147,7 @@ const Newsletter = () => {
           {/* Newsletter Form */}
           {!formState.isSubmitted && (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <CSRFTokenField />
               <label htmlFor="email" className="sr-only">Email address</label>
               <input
                 id="email"
@@ -191,6 +194,21 @@ const Newsletter = () => {
           <p className="text-stone-500 text-sm mt-6">
             We respect your privacy. Unsubscribe at any time.
           </p>
+          
+          {/* Privacy Notice */}
+          <div className="mt-4 max-w-md mx-auto">
+            <p className="text-xs text-stone-400 leading-relaxed text-center">
+              By subscribing, you agree to receive marketing emails from Monxoros Expedition. 
+              Your email will be processed according to our{" "}
+              <Link to="/privacy-policy" className="text-stone-300 underline hover:text-stone-200">
+                Privacy Policy
+              </Link>. 
+              You can unsubscribe at any time and exercise your data rights on our{" "}
+              <Link to="/consumer-rights" className="text-stone-300 underline hover:text-stone-200">
+                Consumer Rights page
+              </Link>.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>

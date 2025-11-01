@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from 'react-router-dom';
 import { FormField } from './form/FormField';
+import { CSRFTokenField } from './form/CSRFTokenField';
 import { formSchema, FormSchemaType } from '../schemas/formSchema';
 import { 
   DESTINATIONS, 
@@ -136,6 +138,9 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
             </div>
 
             <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+              {/* CSRF Protection */}
+              <CSRFTokenField />
+              
               {/* Title */}
               <FormField label="Title">
                 <select
@@ -305,6 +310,23 @@ export const ApplicationForm: React.FC<ApplicationFormProps> = ({
                     Recommended Tour Mailer - Please include me
                   </span>
                 </label>
+              </div>
+
+              {/* Privacy Notice */}
+              <div className="bg-stone-50 p-4 rounded-lg border border-stone-200">
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  By submitting this form, you consent to the collection and processing of your personal data 
+                  as described in our{" "}
+                  <Link to="/privacy-policy" className="text-stone-800 underline hover:text-stone-600">
+                    Privacy Policy
+                  </Link>. 
+                  Your information will be used to process your tour application and provide you with relevant 
+                  travel information. You have the right to access, modify, or delete your data at any time. 
+                  For more information about your rights, visit our{" "}
+                  <Link to="/consumer-rights" className="text-stone-800 underline hover:text-stone-600">
+                    Consumer Rights page
+                  </Link>.
+                </p>
               </div>
 
               {/* Submit Button */}
