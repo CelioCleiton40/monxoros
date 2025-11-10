@@ -5,7 +5,7 @@ import type { NewsletterConfig } from '../types/newsletter';
 /**
  * Google Apps Script URL for newsletter subscription
  */
-export const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfRsN_F4qM6rOOH9gJyy8jmVIfdEmJ0qA_KyUwHt9FzxtReaKx_p1imPTlRPf8JPUH/exec';
+export const SCRIPT_URL = import.meta.env.VITE_Newletter_Url;
 
 /**
  * Gets newsletter configuration

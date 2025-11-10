@@ -1,6 +1,8 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect, useMemo } from "react";
-import { Anchor, Mountain } from "lucide-react";
+"use client";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { Anchor, Mountain, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Import das imagens
 import portalegre01PC from "../assets/exploration/Schedule-day1-3/Schedule-day1-3-Portalegre-01-PC.jpg";
@@ -39,7 +41,7 @@ import galinhos03 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Ga
 import galinhos04 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-04.jpg";
 import galinhos05 from "../assets/exploration/Schedule-day5-7/Schedule-day5-7-Galinhos-05.jpg";
 
-interface TimelineDay {
+export interface TimelineDay {
   day: string;
   title: string;
   location: string;
@@ -50,10 +52,61 @@ interface TimelineDay {
   gallery: string[];
 }
 
-export default function ItineraryTimeline() {
+export interface ItineraryTimelineProps {
+  id?: string;
+  className?: string;
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  onCtaClick?: () => void;
+  itineraryDays?: TimelineDay[];
+  autoplay?: boolean;
+}
+
+// Accessible thumbnail button with ARIA and keyboard support
+function ThumbnailButton(props: {
+  isSelected: boolean;
+  onSelect: () => void;
+  imageSrc: string;
+  alt: string;
+}) {
+  const { isSelected, onSelect, imageSrc, alt } = props;
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={isSelected}
+      aria-label={isSelected ? `${alt} selected` : `Select ${alt}`}
+      className={`w-8 h-8 rounded-sm overflow-hidden border-2 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+        isSelected ? "border-white shadow-lg scale-110" : "border-white/50 hover:border-white/80"
+      }`}
+    >
+      <img
+        src={imageSrc}
+        alt={alt}
+        className="w-full h-full object-cover"
+        draggable={false}
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
+        style={{ userSelect: "none" }}
+      />
+    </button>
+  );
+}
+
+export default function ItineraryTimeline({
+  id = "itinerary",
+  className = "",
+  title = "A Week of Immersive Exploration",
+  subtitle = "Step into Brazil’s Northeast, a place of light, texture, and resilience, where your photography becomes an act of discovery.",
+  ctaText = "Reserve Your Spot",
+  onCtaClick,
+  itineraryDays,
+  autoplay = false,
+}: ItineraryTimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.1 });
   const [selectedImages, setSelectedImages] = useState<{[key: number]: number}>({});
+  const [activeDay, setActiveDay] = useState(0);
 
   // --- State Hooks ---
   const [isMobile, setIsMobile] = useState(false);
@@ -68,8 +121,8 @@ export default function ItineraryTimeline() {
   }, []);
 
   // --- Memoized Data ---
-  // IMPROVEMENT: `useMemo` optimizes performance by recreating the list only when `isMobile` changes.
-  const itineraryEffective: TimelineDay[] = useMemo(() => [
+  // Default itinerary content preserved as originally provided
+  const defaultItineraryDays: TimelineDay[] = useMemo(() => [
     {
       day: "1 - 3",
       title: "Arrival in the Mountainous Sertão",
@@ -129,33 +182,37 @@ export default function ItineraryTimeline() {
     },
   ], [isMobile]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
+  const itineraryEffective: TimelineDay[] = itineraryDays ?? defaultItineraryDays;
 
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
+  const onThumbnailSelect = useCallback((dayIndex: number, imgIndex: number) => {
+    setSelectedImages((prev) => ({ ...prev, [dayIndex]: imgIndex }));
+  }, []);
 
+  const handleNextDay = useCallback(() => {
+    setActiveDay((prev) => (prev + 1) % itineraryEffective.length);
+  }, [itineraryEffective.length]);
+
+  const handlePrevDay = useCallback(() => {
+    setActiveDay((prev) => (prev - 1 + itineraryEffective.length) % itineraryEffective.length);
+  }, [itineraryEffective.length]);
+
+  useEffect(() => {
+    if (!autoplay) return;
+    const interval = setInterval(handleNextDay, 5000);
+    return () => clearInterval(interval);
+  }, [autoplay, handleNextDay]);
+
+  const randomRotateY = () => Math.floor(Math.random() * 21) - 10;
+
+  
   return (
-    <section id="itinerary"
-    ref={containerRef} className="py-20 bg-white">
-      <div className="container mx-auto px-4 md:px-8">
+    <section
+      id={id}
+      ref={containerRef}
+      className={cn("py-20 bg-white", className)}
+      aria-labelledby={`${id}-title`}
+    >
+      <div className="container mx-auto px-4 md:px-8 lg:px-12">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -164,135 +221,165 @@ export default function ItineraryTimeline() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-stone-800 mb-6">
-            A Week of Immersive Exploration
+          <h2 id={`${id}-title`} className="text-3xl md:text-4xl lg:text-5xl font-light text-stone-800 mb-6 tracking-tight">
+            {title}
           </h2>
           <p className="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto font-light leading-relaxed">
-            Step into Brazil’s Northeast, a place of light, texture, and
-            resilience, where your photography becomes an act of discovery.
+            {subtitle}
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="relative max-w-4xl mx-auto"
-        >
-          {/* Timeline Line */}
-          <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-stone-200" />
-
-          {itineraryEffective.map((day, index) => (
-            <motion.div
-              key={day.day}
-              variants={itemVariants}
-              className={`relative flex items-center mb-12 ${
-                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              }`}
+        {/* Layout principal inspirado em AnimatedTestimonials (grid 2 colunas) */}
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+          {/* Coluna da imagem com animação */}
+          <div>
+            <div className="relative min-h-[18rem] md:min-h-[22rem] w-full">
+              <AnimatePresence>
+                {(() => {
+                  const day = itineraryEffective[activeDay];
+                  const currentImage = day.gallery[selectedImages[activeDay] || 0] || day.image;
+                  return (
+                    <motion.div
+                      key={currentImage}
+                      initial={{ opacity: 0, scale: 0.9, z: -100, rotate: randomRotateY() }}
+                      animate={{ opacity: 1, scale: 1, z: 0, rotate: 0, y: [0, -40, 0] }}
+                      exit={{ opacity: 0, scale: 0.9, z: 100, rotate: randomRotateY() }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="absolute inset-0 origin-bottom"
+                    >
+                      <img
+                        src={currentImage}
+                        alt={day.title}
+                        width={900}
+                        height={600}
+                        draggable={false}
+                        className="h-full w-full rounded-3xl object-contain bg-stone-100 p-1 md:p-2"
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                      />
+                    </motion.div>
+                  );
+                })()}
+              </AnimatePresence>
+            </div>
+            {/* Thumbnails acessíveis para o dia ativo */}
+            <div
+              className="mt-3 flex gap-1 justify-center"
+              role="group"
+              aria-label={`Selecionar imagem para ${itineraryEffective[activeDay].title}`}
             >
-              {/* Timeline Dot */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={isInView ? { scale: 1 } : { scale: 0 }}
-                transition={{ delay: index * 0.2 + 0.5, duration: 0.5 }}
-                className="absolute left-8 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-stone-800 rounded-full border-4 border-white shadow-lg z-10"
-              />
+              {itineraryEffective[activeDay].gallery.map((image, imgIndex) => (
+                <ThumbnailButton
+                  key={imgIndex}
+                  isSelected={(selectedImages[activeDay] || 0) === imgIndex}
+                  onSelect={() => onThumbnailSelect(activeDay, imgIndex)}
+                  imageSrc={image}
+                  alt={`${itineraryEffective[activeDay].title} ${imgIndex + 1}`}
+                />
+              ))}
+            </div>
 
-              {/* Content Card */}
-              <div
-                className={`w-full md:w-5/12 ml-16 md:ml-0 ${
-                  index % 2 === 0 ? "md:mr-8" : "md:ml-8"
-                }`}
+            {/* Controles abaixo da imagem no mobile */}
+            <div className="mt-4 flex gap-4 justify-center md:hidden">
+              <button
+                onClick={handlePrevDay}
+                className="h-8 w-8 rounded-full bg-stone-200 hover:bg-stone-300 transition-colors flex items-center justify-center group/button focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                aria-label="Previous day"
               >
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden border border-stone-100"
-                >
-                  {/* Image */}
-                  <div className="h-80 overflow-hidden relative">
-                    <motion.img
-                      src={day.gallery[selectedImages[index] || 0]}
-                      alt={day.title}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    
-                    {/* Mini Gallery Thumbnails */}
-                    <div className="absolute bottom-2 left-2 right-2 flex gap-1 justify-center">
-                      {day.gallery.map((image, imgIndex) => (
-                        <button
-                          key={imgIndex}
-                          onClick={() => setSelectedImages(prev => ({...prev, [index]: imgIndex}))}
-                          className={`w-8 h-8 rounded-sm overflow-hidden border-2 transition-all duration-200 ${
-                            (selectedImages[index] || 0) === imgIndex 
-                              ? 'border-white shadow-lg scale-110' 
-                              : 'border-white/50 hover:border-white/80'
-                          }`}
-                        >
-                          <img
-                            src={image}
-                            alt={`${day.title} ${imgIndex + 1}`}
-                            className="w-full h-full object-cover"
-                            draggable={false}
-                            onContextMenu={(e) => e.preventDefault()}
-                            onDragStart={(e) => e.preventDefault()}
-                            style={{ userSelect: 'none' }}
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                <svg className="h-5 w-5 text-stone-800 group-hover/button:-rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="h-8 w-8 rounded-full bg-stone-200 hover:bg-stone-300 transition-colors flex items-center justify-center group/button focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                aria-label="Next day"
+              >
+                <svg className="h-5 w-5 text-stone-800 group-hover/button:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Day Number & Icon */}
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-light text-stone-800">
-                        Day {day.day}
-                      </span>
-                      <div className="text-stone-600">{day.icon}</div>
-                    </div>
+          {/* Coluna de conteúdo do dia ativo */}
+          <div className="flex justify-between flex-col py-2">
+            <motion.div
+              key={activeDay}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              role="region"
+              aria-label={`Day ${itineraryEffective[activeDay].day}: ${itineraryEffective[activeDay].title}`}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-2xl font-light text-stone-800">
+                    {itineraryEffective[activeDay].title}
+                  </h3>
+                  <p className="text-sm text-stone-500">Day {itineraryEffective[activeDay].day}</p>
+                </div>
+                <div className="text-stone-600" aria-hidden="true">{itineraryEffective[activeDay].icon}</div>
+              </div>
 
-                    {/* Title & Location */}
-                    <h3 className="text-xl font-medium text-stone-800 mb-2">
-                      {day.title}
-                    </h3>
-                    <p className="text-sm text-stone-500 mb-4 font-medium tracking-wide">
-                      📍 {day.location}
-                    </p>
+              <p className="text-sm text-stone-600 mb-4 font-medium tracking-wide">
+                📍 {itineraryEffective[activeDay].location}
+              </p>
 
-                    {/* Description */}
-                    <p className="text-stone-600 mb-4 font-light leading-relaxed">
-                      {day.description}
-                    </p>
+              {/* Animação leve palavra por palavra, mantendo o texto intacto */}
+              <motion.p className="text-base md:text-lg text-stone-700 mt-2 leading-relaxed font-light">
+                {itineraryEffective[activeDay].description.split(" ").map((word, index) => (
+                  <motion.span
+                    key={index}
+                    initial={{ filter: "blur(10px)", opacity: 0, y: 4 }}
+                    animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, ease: "easeInOut", delay: 0.02 * index }}
+                    className="inline-block"
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
+              </motion.p>
 
-                    {/* Highlights */}
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-stone-700 mb-2">
-                        Highlights:
-                      </h4>
-                      <ul className="space-y-1">
-                        {day.highlights.map((highlight, idx) => (
-                          <li
-                            key={idx}
-                            className="text-sm text-stone-600 flex items-center"
-                          >
-                            <span className="w-1.5 h-1.5 bg-stone-400 rounded-full mr-2" />
-                            {highlight}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </motion.div>
+              <div className="mt-6">
+                <h4 className="text-stone-800 font-medium mb-2">Highlights</h4>
+                <ul className="space-y-1" role="list">
+                  {itineraryEffective[activeDay].highlights.map((highlight, idx) => (
+                    <li key={idx} className="text-sm text-stone-700 flex items-center" role="listitem">
+                      <span className="w-1.5 h-1.5 bg-stone-500 rounded-full mr-2" aria-hidden="true" />
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
-          ))}
-        </motion.div>
 
-        {/* Bottom CTA */}
+            {/* Controles (prev/next) visíveis apenas em desktop */}
+            <div className="hidden md:flex gap-4 pt-4">
+              <button
+                onClick={handlePrevDay}
+                className="h-8 w-8 rounded-full bg-stone-200 hover:bg-stone-300 transition-colors flex items-center justify-center group/button focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                aria-label="Previous day"
+              >
+                <svg className="h-5 w-5 text-stone-800 group-hover/button:-rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={handleNextDay}
+                className="h-8 w-8 rounded-full bg-stone-200 hover:bg-stone-300 transition-colors flex items-center justify-center group/button focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                aria-label="Next day"
+              >
+                <svg className="h-5 w-5 text-stone-800 group-hover/button:rotate-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom CTAs – primary and secondary standardized */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -300,23 +387,38 @@ export default function ItineraryTimeline() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <p className="text-stone-600 mb-6 font-light">
+          <div className="flex items-center justify-center mb-4">
+            <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 py-1 text-sm font-medium shadow-sm">
+              <span className="inline-block h-2 w-2 rounded-full bg-amber-500 animate-pulse" aria-hidden="true" />
+              Limited seats available
+            </span>
+          </div>
+          <p className="text-stone-700 mb-6 font-medium text-lg">
             Ready to embark on this transformative journey?
           </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-stone-800 text-white px-8 py-3 rounded-full hover:bg-stone-700 transition-colors duration-300 font-light tracking-wide"
-            onClick={() => {
-              document
-                .getElementById("invitation")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            Reserve Your Spot
-          </motion.button>
+          <div className="flex items-center justify-center">
+            {/* Primary CTA */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-black font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              onClick={() => {
+                if (onCtaClick) {
+                  onCtaClick();
+                } else {
+                  document.getElementById("invitation")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              aria-label={ctaText}
+            >
+              {ctaText}
+              <ArrowRight className="ml-3 h-5 w-5 text-black/80 transition-transform duration-300 group-hover:translate-x-0.5" />
+            </motion.button>
+          </div>
+          <p className="mt-3 text-xs text-stone-500">No commitment — join a small group of passionate photographers.</p>
         </motion.div>
       </div>
     </section>
   );
 }
+

@@ -29,7 +29,7 @@ const FloatingWidget = () => {
     {
       icon: <Calendar className="w-4 h-4" />,
       label: "7 Days",
-      detail: "March 15–21, 2026"
+      detail: "March, 2026"
     },
     {
       icon: <Users className="w-4 h-4" />,

@@ -110,7 +110,7 @@ export default function HeroSection() {
             </div>
             <div className="flex items-center gap-2 drop-shadow-sm">
               <MapPin className="w-5 h-5 text-amber-400 drop-shadow-sm" />
-              <span className="text-sm md:text-base">Northeast Brazil</span>
+              <span className="text-sm md:text-base">Northern or Northeastern Brazil</span>
             </div>
             <div className="flex items-center gap-2 drop-shadow-sm">
               <Calendar className="w-5 h-5 text-amber-400 drop-shadow-sm" />

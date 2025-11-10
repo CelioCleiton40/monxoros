@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Star, Quote, Play } from 'lucide-react';
+import { Star, Quote, Play, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
 // Import dos assets locais
@@ -104,17 +104,13 @@ const TestimonialsSection = () => {
             Ready to create your own story in the Sertão?
           </p>
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-3 rounded-md font-medium text-sm hover:bg-gray-800 transition-colors duration-200"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => document.getElementById('invitation')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-black font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl drop-shadow-md"
           >
             Reserve Your Spot
-            <motion.span
-              animate={{ x: [0, 3, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
-              →
-            </motion.span>
+            <ArrowRight className="ml-3 h-5 w-5 text-black/80 transition-transform duration-300 group-hover:translate-x-0.5" />
           </motion.button>
         </motion.footer>
       </div>

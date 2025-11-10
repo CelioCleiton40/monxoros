@@ -29,10 +29,15 @@ export default function Footer() {
       handle: "+1(407)4850370"
     }
   ];
-
+interface quickLinks {
+  name: string;
+  href: string;
+  isExternal?: boolean;
+  isRoute?: boolean;
+}
   const quickLinks = [
     { name: "About the Expedition", href: "#itinerary" },
-    { name: "Gallery", href: "#gallery" },
+    { name: "Gallery", href: "https://fineartamerica.com/profiles/jose-bezerra", isExternal: true},
     { name: "Testimonials", href: "#testimonials" },
     { name: "Apply Now", href: "#invitation" },
     { name: "About José Bezerra", href: "#about" },
@@ -121,7 +126,7 @@ export default function Footer() {
                   ) : (
                     <a
                       href={link.href}
-                      className="text-stone-400 hover:text-white transition-colors duration-300 font-light text-sm"
+                      className="text-stone-400 hover:text-white transition-colors duration-300 font-light text-sm no-underline"
                     >
                       {link.name}
                     </a>

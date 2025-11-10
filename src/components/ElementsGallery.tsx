@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useMemo } from 'react';
-import { Camera, Sun, Users, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Camera, Sun, Users, X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 
 // PC Image Imports
 import lightShadow01 from "../assets/ElementsGallery/LightShadow/LightandShadow-01-PC.jpg";
@@ -247,10 +247,11 @@ export default function ElementsGallery() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-stone-800 text-white px-8 py-3 rounded-full hover:bg-stone-700 transition-colors duration-300 font-light tracking-wide"
+            className="group inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-black font-medium px-8 py-4 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl drop-shadow-md"
             onClick={() => document.getElementById('invitation')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Join the Expedition
+            <ArrowRight className="ml-3 h-5 w-5 text-black/80 transition-transform duration-300 group-hover:translate-x-0.5" />
           </motion.button>
         </motion.div>
       </motion.div>

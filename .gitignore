@@ -48,3 +48,5 @@ server/google-apps-script/
 *.sln
 *.sw?
 .vercel
+# Arquivos compactados (não versionar)
+*.rar

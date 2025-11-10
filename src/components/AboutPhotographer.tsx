@@ -4,7 +4,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
-import { Camera, Award, Globe, Heart, ExternalLink } from "lucide-react";
+import { Camera, Award, Globe, Heart, ArrowRight } from "lucide-react";
 import JbSegundo from "../assets/AboutPhotographer/Photographer/JbSegundo.jpg";
 
 const AboutPhotographer = () => {
@@ -218,14 +218,14 @@ His photography is also used by social scientists, universities, and educators t
 
         <motion.button
           onClick={() => {
-            window.open('https://github.com/jbsegundo');
+            window.open('discover-my-work-products');
           }}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.97 }}
-          className="mt-12 px-8 py-3 rounded-full bg-stone-800 text-white text-sm uppercase tracking-wide font-medium shadow-md hover:bg-stone-700 transition-all duration-150 flex items-center gap-2"
+          className="mt-12 group inline-flex items-center gap-2 bg-gray-900 text-white px-8 py-3 rounded-md font-medium text-sm hover:bg-gray-800 transition-colors duration-200"
         >
           Discover My Work & Products
-          <ExternalLink className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
         </motion.button>
       </motion.div>
     </section>

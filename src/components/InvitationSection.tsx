@@ -16,7 +16,7 @@ export default function InvitationSection() {
   };
 
   const expeditionDetails = [
-    { icon: <Calendar className="w-6 h-6" />, label: "Dates", value: "March 15–21, 2026" },
+    { icon: <Calendar className="w-6 h-6" />, label: "Dates", value: "March, 2026" },
     { icon: <Users className="w-6 h-6" />, label: "Group Size", value: "6 Photographers Only" },
     { icon: <MapPin className="w-6 h-6" />, label: "Location", value: "Northeast Brazil" },
     { icon: <DollarSign className="w-6 h-6" />, label: "Investment", value: "To Be Agreed" },
