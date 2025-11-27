@@ -26,7 +26,7 @@
   <g transform="translate(100, 150)">
     <!-- Title -->
     <text x="0" y="0" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white">
-      Monxoros Expedition
+      Monxoro Expeditions
     </text>
     
     <!-- Subtitle -->
@@ -46,7 +46,7 @@
     
     <!-- Website -->
     <text x="0" y="240" font-family="Arial, sans-serif" font-size="18" fill="#9ca3af">
-      monxorosexpedition.com
+      monxoroexpeditions.com
     </text>
   </g>
   

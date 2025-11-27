@@ -1,4 +1,4 @@
-# 🏜️ Monxoros Expedition
+# 🏜️ Monxoro Expeditions
 
 > **An exclusive photography workshop experience through Northeast Brazil's stunning Sertão region**
 
@@ -60,8 +60,8 @@ A modern, responsive web application built for showcasing and managing registrat
    
    Configure your `.env` file:
    ```env
-   VITE_GOOGLE_SHEETS_API_URL=your_google_apps_script_url
-   VITE_DEV_MODE=true
+   VITE_NEWSLETTER_URL=your_google_apps_script_url
+   VITE_NEWSLETTER_DEV_MODE=true
    # Note: Gmail API credentials are configured server-side for security
    ```
 
@@ -200,7 +200,7 @@ The newsletter and email system integrates with Google services:
 
 ## 🎯 Expedition Details
 
-**Monxoros Expedition** is an exclusive photography workshop featuring:
+**Monxoro Expeditions** is an exclusive photography workshop featuring:
 - **Duration**: 7 days (March 15-21, 2026)
 - **Group Size**: Limited to 6 photographers
 - **Locations**: Portalegre, São Rafael, Galinhos (Northeast Brazil)
@@ -275,7 +275,7 @@ The project includes Vercel configuration (`vercel.json`) for easy deployment.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+License details to be defined.
 
 ## 👨‍💻 Developer
 

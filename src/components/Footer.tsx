@@ -171,7 +171,7 @@ interface quickLinks {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-stone-500 text-sm">
               <div className="flex items-center space-x-2">
-                <span>© 2025 Monxoros Expedition.</span>
+                <span>© 2025 Monxoro Expeditions.</span>
                 <span className="hidden md:inline">All rights reserved.</span>
               </div>
               <Link 

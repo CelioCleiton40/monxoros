@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+ import heroImage from "@/assets/DiscoverMyWorkProductsImage/AboutMe-01.jpg";
 
 export function PortfolioHero({ shopUrl }: { shopUrl: string }) {
   return (
@@ -21,7 +22,7 @@ export function PortfolioHero({ shopUrl }: { shopUrl: string }) {
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.1 }}>
           <img
-            src="https://placehold.co/800x600"
+            src={heroImage}
             alt="Hero placeholder"
             className="w-full h-auto rounded-xl border border-stone-200 shadow-sm object-cover"
             loading="lazy"

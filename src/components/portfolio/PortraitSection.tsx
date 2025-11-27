@@ -1,3 +1,19 @@
+import portrait01 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-01.jpg'
+import portrait02 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-02.jpg'
+import portrait03 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-03.jpg'
+import portrait04 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-04.jpg'
+import portrait05 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-05.jpg'
+import portrait06 from '@/assets/DiscoverMyWorkProductsImage/portrait/AboutMe-Portrait-06.jpg'
+
+const portraits = [
+  portrait01,
+  portrait02,
+  portrait03,
+  portrait04,
+  portrait05,
+  portrait06,
+]
+
 export function PortraitSection() {
   return (
     <section aria-labelledby="portrait-title" className="mx-auto max-w-7xl px-6 pb-16">
@@ -13,7 +29,7 @@ export function PortraitSection() {
           {Array.from({ length: 6 }).map((_, idx) => (
             <img
               key={idx}
-              src="https://placehold.co/800x600"
+              src={portraits[idx]}
               alt={`Portrait placeholder ${idx + 1}`}
               className="w-full h-auto rounded-lg border border-stone-200 object-cover"
               loading="lazy"

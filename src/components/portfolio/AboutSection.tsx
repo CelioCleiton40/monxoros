@@ -1,4 +1,5 @@
 import { Separator } from "@/components/ui/Separator";
+import aboutImage from "@/assets/DiscoverMyWorkProductsImage/JoseBezerra-1.jpg";
 
 export function AboutSection() {
   return (
@@ -25,7 +26,7 @@ export function AboutSection() {
         </div>
         <div className="rounded-2xl border border-stone-200 bg-stone-50 p-6">
           <img
-            src="https://placehold.co/800x600"
+            src={aboutImage}
             alt="About section placeholder"
             className="w-full h-auto rounded-xl border border-stone-200 object-cover"
             loading="lazy"

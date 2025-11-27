@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
               Introduction
             </h2>
             <p className="text-stone-600 leading-relaxed mb-4">
-              Monxoros Expedition ("we", "our" or "company") is committed to protecting 
+              Monxoro Expeditions ("we", "our" or "company") is committed to protecting 
               your privacy. This Privacy Policy explains how we collect, use, 
               disclose and protect your information when you visit our website or 
               sign up for our services.

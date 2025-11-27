@@ -26,7 +26,8 @@
     "noFallthroughCasesInSwitch": true,
 
     // ✅ Evita gerar JS (Vite já cuida disso)
-    "noEmit": true
+    "noEmit": true,
+    "types": ["vitest/globals"]
   },
   "include": ["src", "api"],
   "exclude": ["node_modules", "dist"]

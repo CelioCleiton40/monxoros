@@ -198,7 +198,7 @@ const Newsletter = () => {
           {/* Privacy Notice */}
           <div className="mt-4 max-w-md mx-auto">
             <p className="text-xs text-stone-400 leading-relaxed text-center">
-              By subscribing, you agree to receive marketing emails from Monxoros Expedition. 
+              By subscribing, you agree to receive marketing emails from Monxoro Expeditions. 
               Your email will be processed according to our{" "}
               <Link to="/privacy-policy" className="text-stone-300 underline hover:text-stone-200">
                 Privacy Policy

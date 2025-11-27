@@ -28,10 +28,10 @@
   <g transform="translate(80, 120)">
     <!-- Main Title -->
     <text x="0" y="0" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="white">
-      Sertão Photography
+      Monxoro
     </text>
     <text x="0" y="70" font-family="Arial, sans-serif" font-size="58" font-weight="bold" fill="white">
-      Expedition
+      Expeditions
     </text>
     
     <!-- Subtitle -->
@@ -54,7 +54,7 @@
     
     <!-- Website -->
     <text x="0" y="320" font-family="Arial, sans-serif" font-size="18" fill="#d1d5db">
-      monxorosexpedition.com
+      monxoroexpeditions.com
     </text>
   </g>
   
