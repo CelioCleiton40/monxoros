@@ -88,9 +88,9 @@ export default function HeroSection() {
           className="text-center max-w-4xl mx-auto"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight mb-6 text-amber-400 drop-shadow-lg">
-            Monxoros Photographic
+            Monxoro Photographic
             <br />
-            <span className="text-amber-400 drop-shadow-lg">Expedition</span>
+            <span className="text-amber-400 drop-shadow-lg">Expeditions</span>
           </h1>
           
           <p className="text-lg md:text-xl lg:text-2xl text-white/90 font-light leading-relaxed mb-8 max-w-2xl drop-shadow-md">
