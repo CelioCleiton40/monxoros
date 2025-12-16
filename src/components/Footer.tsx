@@ -86,7 +86,7 @@ interface quickLinks {
             <div className="flex items-center space-x-3 mb-6">
               <Camera className="w-8 h-8 text-stone-400" />
               <h3 className="text-2xl font-light tracking-wide">
-                Monxoros Photographic
+                Monxoro Photographic
               </h3>
             </div>
             
