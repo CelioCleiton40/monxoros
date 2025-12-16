@@ -39,6 +39,8 @@ function AutoImage({ images, alt }: { images: string[]; alt: string }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           loading="lazy"
+          draggable={false}
+          onContextMenu={(e) => e.preventDefault()}
         />
       </AnimatePresence>
       

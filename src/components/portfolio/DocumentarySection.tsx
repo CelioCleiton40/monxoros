@@ -71,6 +71,8 @@ export function DocumentarySection() {
                         src={thumbnail}
                         alt=""
                         className="w-full h-full object-cover blur-2xl opacity-60 scale-110"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
                       />
                       <div className="absolute inset-0 bg-stone-900/20" />
                     </div>
@@ -81,6 +83,8 @@ export function DocumentarySection() {
                       alt="Documentary video thumbnail"
                       className="relative z-10 w-full h-full object-contain transition-transform duration-700 ease-out group-hover/btn:scale-[1.02]"
                       loading="lazy"
+                      draggable={false}
+                      onContextMenu={(e) => e.preventDefault()}
                     />
                     
                     {/* Botão Play Moderno */}

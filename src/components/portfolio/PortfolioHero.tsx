@@ -98,6 +98,8 @@ export function PortfolioHero({ shopUrl }: { shopUrl: string }) {
                 alt="José Bezerra Portrait"
                 className="w-full h-auto object-cover transform transition-transform duration-1000 hover:scale-105"
                 loading="eager" // Carregar rápido pois é a primeira coisa que se vê
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
               />
             </div>
           </motion.div>
